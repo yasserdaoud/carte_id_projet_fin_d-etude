@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:local_auth/local_auth.dart';
-import '/main.dart';
+import 'package:lottie/lottie.dart';
 import 'dart:async';
+import '../main.dart';
 import '/screen/choose_screen.dart';
-
-
-
-
 
 class FingerPrintPage extends StatefulWidget {
   const FingerPrintPage({Key? key}) : super(key: key);
@@ -20,20 +17,18 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
   String _authorized = 'Please authenticate';
   bool _isAuthenticating = false;
 
-
-
   Future<void> _authenticate() async {
     bool authenticated = false;
     try {
       setState(() {
         _isAuthenticating = true;
-        _authorized = 'Authentification...';
+        _authorized = 'Authenticating...';
       });
       authenticated = await auth.authenticate(
-        localizedReason: 'veuiller placer votre pouce sur le capteur d\'empreinte',
+        localizedReason: 'Please place your thumb on the fingerprint sensor',
       );
       setState(() {
-        _authorized = authenticated ? 'Succées' : 'réessayer';
+        _authorized = authenticated ? 'Success' : 'Try again';
       });
       if (authenticated) {
         Navigator.push(
@@ -56,21 +51,17 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
 
   @override
   Widget build(BuildContext context) {
-    //SizeConfig().init(context);
-    //double width = SizeConfig.screenW!;
-   // double height = SizeConfig.screenH!;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
           leading: BackButton(
-           // style: ButtonStyle(),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NfcApp(),
-                  ),
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NfcApp(),
+                ),
               );
             },
           ),
@@ -87,8 +78,8 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
                 style: TextStyle(
                   fontFamily: "Mulish",
                   fontWeight: FontWeight.w900,
-                  color: Colors.white
-                  //fontSize: (width <= 550) ? 30 : 35,
+                  color: Colors.white,
+                  fontSize: 32,
                 ),
               ),
               const SizedBox(height: 50),
@@ -99,42 +90,59 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Mulish",
-                    height: 2,
+                    height: 1.5,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  //Theme.of(context).colorScheme.primary,
-                  backgroundColor: Colors.amber,
-                  //Theme.of(context).colorScheme.background,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    side: BorderSide(
-                      color: Colors.black,
-
-                      //Theme.of(context).colorScheme.secondary,
-                      width: 2.0,
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
-                ),
-                onPressed: _isAuthenticating ? null : _authenticate,
+              AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
                 child: _isAuthenticating
-                    ? CircularProgressIndicator()
-                    : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.fingerprint_sharp),
-                  SizedBox(width: 8.0),
-                  Text('Authenticate'),
-                ],
+                    ? Lottie.asset(
+                  'assets/animation/Animation.json',
+                  width: 100,
+                  height: 100,
+                  key: ValueKey('loading'),
+                )
+                    : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.amber,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 2.0,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
+                  ),
+                  onPressed: _isAuthenticating ? null : _authenticate,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.fingerprint_sharp),
+                      SizedBox(width: 8.0),
+                      Text('Authenticate'),
+                    ],
+                  ),
+                  key: ValueKey('button'),
+                ),
               ),
+              const SizedBox(height: 20),
+              AnimatedOpacity(
+                opacity: _isAuthenticating ? 0.5 : 1.0,
+                duration: Duration(milliseconds: 500),
+                child: Text(
+                  _authorized,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ],
           ),
@@ -143,5 +151,3 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
     );
   }
 }
-
-

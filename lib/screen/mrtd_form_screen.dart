@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
 
 class MrtdForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -38,27 +37,34 @@ class MrtdForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30.0),
       child: Form(
         key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const Text(
+              'Please fill in the details below to proceed:',
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            const SizedBox(height: 20),
             _buildTextFormField(
               controller: docNumberController,
               labelText: 'ID card number',
+              icon: Icons.badge,
               validator: (value) {
                 if (value?.isEmpty ?? false) {
-                  return 'Please enter passport number';
+                  return 'Please enter ID card number';
                 }
                 return null;
               },
               isEnabled: !isDisabled,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             _buildTextFormField(
               controller: dobController,
               labelText: 'Date of Birth',
+              icon: Icons.calendar_today,
               onTap: () async {
                 FocusScope.of(context).requestFocus(FocusNode());
                 final now = DateTime.now();
@@ -78,10 +84,11 @@ class MrtdForm extends StatelessWidget {
               },
               isEnabled: !isDisabled,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             _buildTextFormField(
               controller: doeController,
               labelText: 'Date of Expiry',
+              icon: Icons.calendar_today,
               onTap: () async {
                 FocusScope.of(context).requestFocus(FocusNode());
                 final now = DateTime.now();
@@ -101,13 +108,20 @@ class MrtdForm extends StatelessWidget {
               },
               isEnabled: !isDisabled,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
                   backgroundColor: Colors.amber,
-                  shape: StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
                 ),
                 onPressed: isDisabled
                     ? null
@@ -135,17 +149,19 @@ class MrtdForm extends StatelessWidget {
   Widget _buildTextFormField({
     required TextEditingController controller,
     required String labelText,
+    required IconData icon,
     required String? Function(String?) validator,
     bool isEnabled = true,
     void Function()? onTap,
   }) {
     return TextFormField(
       controller: controller,
-      style: TextStyle(color: Colors.amber), // Change text color to amber
+      style: TextStyle(color: Colors.amber),
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.amber), // Change label text color to amber
+        labelStyle: TextStyle(color: Colors.amber),
         fillColor: Colors.white,
+        prefixIcon: Icon(icon, color: Colors.amber),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.amber),
           borderRadius: BorderRadius.circular(10),

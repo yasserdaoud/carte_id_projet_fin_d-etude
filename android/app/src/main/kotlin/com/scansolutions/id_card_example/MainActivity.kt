@@ -10,7 +10,6 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterFragmentActivity() {
 
     private val imageChannel = "image_channel"
-    private val hceChannel = "com.yourcompany.yourapp/hce"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine)
@@ -31,42 +30,10 @@ class MainActivity : FlutterFragmentActivity() {
                 }
             }
 
-        // Configure MethodChannel for HCE service control
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, hceChannel)
-            .setMethodCallHandler { call, result ->
-                when (call.method) {
-                    "startHceService" -> {
-                        val started = startHceService()
-                        result.success(started)
-                    }
-                    "stopHceService" -> {
-                        val stopped = stopHceService()
-                        result.success(stopped)
-                    }
-                    else -> result.notImplemented()
-                }
-            }
+
     }
 
-    private fun startHceService(): Boolean {
-        return try {
-            val intent = Intent(this, CardService::class.java)
-            startService(intent)
-            true
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Failed to start HCE Service", e)
-            false
-        }
-    }
 
-    private fun stopHceService(): Boolean {
-        return try {
-            val intent = Intent(this, CardService::class.java)
-            stopService(intent)
-            true
-        } catch (e: Exception) {
-            Log.e("MainActivity", "Failed to stop HCE Service", e)
-            false
-        }
-    }
+
+
 }

@@ -1,15 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import '/screen/finger_print_screen.dart';
+import 'firebase_options.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-void main() {
   if (kDebugMode) {
     Logger.root.level = Level.ALL;
     Logger.root.onRecord.listen((record) {
-      print(
-          '${record.loggerName} ${record.level.name}: ${record.time}: ${record.message}');
+      print('${record.loggerName} ${record.level.name}: ${record.time}: ${record.message}');
     });
   }
 
@@ -40,7 +45,6 @@ class NfcApp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        //elevation: 0,
         title: const Text(
           "Bitaka ID",
           style: TextStyle(color: Colors.white),
@@ -48,45 +52,46 @@ class NfcApp extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 100,
+              const SizedBox(height: 20),
+
+              // Image
+              Image.asset(
+                'assets/open.png', // Assurez-vous d'avoir une image à cet emplacement
+                width: 200,
+                height: 200,
+                fit: BoxFit.fill,
               ),
 
-              // Spacer(),
+              const SizedBox(height: 40),
+
               const Text(
-                "Scan your Identity cards",
-                style: TextStyle(fontSize: 20,color: Colors.white),
-              ),
-              const SizedBox(
-                height: 10,
+                "Emulate Your Identity Card",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                textAlign: TextAlign.center,
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: const Text(
-                  "Click on the button below to start scanning",
+              const SizedBox(height: 10),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  "This application allows you to emulate your identity card. Click on the button below to start scanning.",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
 
-
-              SizedBox(
-                height: 300,
-              ),
-
-
-
+              const SizedBox(height: 40),
 
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber, // Change this color to match your theme
+                  backgroundColor: Colors.amber,
                   padding: EdgeInsets.symmetric(horizontal: 76, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
@@ -104,15 +109,12 @@ class NfcApp extends StatelessWidget {
                   "Start",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black, // Change this color to match your theme
+                    color: Colors.black,
                   ),
                 ),
               ),
 
-              const SizedBox(
-                height: 20,
-              ),
-
+              const SizedBox(height: 20),
             ],
           ),
         ),

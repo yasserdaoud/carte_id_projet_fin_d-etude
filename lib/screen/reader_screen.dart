@@ -33,6 +33,7 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
 
   final NfcProvider _nfc = NfcProvider();
   final _scrollController = ScrollController();
+  Timer? _nfcCheckTimer;
 
   @override
   void initState() {
@@ -47,6 +48,12 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
     ]);
 
     _initPlatformState();
+  }
+
+  @override
+  void dispose() {
+    _nfcCheckTimer?.cancel();
+    super.dispose();
   }
 
   DateTime? _getDOBDate() {
@@ -95,6 +102,26 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
         SnackBar(content: Text("Couldn't access device NFC, please try again")),
       );
     }
+  }
+
+  void _checkNfcAvailabilityPeriodically() {
+    _nfcCheckTimer = Timer.periodic(Duration(seconds: 2), (timer) async {
+      bool isNfcAvailable;
+      try {
+        NfcStatus status = await NfcProvider.nfcStatus;
+        isNfcAvailable = status == NfcStatus.enabled;
+      } on PlatformException {
+        isNfcAvailable = false;
+      }
+
+      if (isNfcAvailable) {
+        _nfcCheckTimer?.cancel();
+        setState(() {
+          _isNfcAvailable = true;
+        });
+        _readMRTD();
+      }
+    });
   }
 
   void _readMRTD() async {
@@ -232,10 +259,11 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
 
   void _openSettings() async {
     final intent = AndroidIntent(
-      action: 'android.settings.SETTINGS',
+      action: 'android.settings.NFC_SETTINGS',
       flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
     );
     await intent.launch();
+    _checkNfcAvailabilityPeriodically();
   }
 
   @override
@@ -359,15 +387,7 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  'Please hold your NFC-enabled device near the document to start reading.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white,
-                  ),
-                ),
+
               ],
             ),
           ),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "519425572325",
+    "project_id": "cartenationale",
+    "storage_bucket": "cartenationale.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519425572325:android:8d33817dec082baa15430c",
+        "android_client_info": {
+          "package_name": "com.example.mrtdeg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOVxmFETx6M55c9uP4FeQoDaLYNKIf88A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,6 +19,7 @@ class MRZCameraOverlay extends StatelessWidget {
             child,
             _buildClipPath(overlayRect),
             _buildWhiteOverlay(overlayRect),
+            _buildGuidanceText(overlayRect),
           ],
         );
       },
@@ -29,8 +30,8 @@ class MRZCameraOverlay extends StatelessWidget {
     return ClipPath(
       clipper: _DocumentClipper(rect: overlayRect),
       child: Container(
-        foregroundDecoration: const BoxDecoration(
-          color: Color.fromRGBO(0, 0, 0, 0.75),
+        foregroundDecoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.75),
         ),
       ),
     );
@@ -40,12 +41,30 @@ class MRZCameraOverlay extends StatelessWidget {
     return Positioned(
       left: overlayRect.left,
       top: overlayRect.top,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 1),
         width: overlayRect.width,
         height: overlayRect.height,
         decoration: BoxDecoration(
           border: Border.all(width: 2.0, color: Colors.amber),
           borderRadius: BorderRadius.all(overlayRect.tlRadius),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGuidanceText(RRect overlayRect) {
+    return Positioned(
+      left: overlayRect.left,
+      top: overlayRect.top - 30,
+      width: overlayRect.width,
+      child: Text(
+        'Align the document within the frame',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.amber,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -84,28 +103,4 @@ class _DocumentClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(_DocumentClipper oldClipper) => false;
-}
-
-class _WhiteOverlay extends StatelessWidget {
-  const _WhiteOverlay({
-    required this.rect,
-    Key? key,
-  }) : super(key: key);
-  final RRect rect;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: rect.left,
-      top: rect.top,
-      child: Container(
-        width: rect.width,
-        height: rect.height,
-        decoration: BoxDecoration(
-          border: Border.all(width: 2.0, color: Colors.amber),
-          borderRadius: BorderRadius.all(rect.tlRadius),
-        ),
-      ),
-    );
-  }
 }
