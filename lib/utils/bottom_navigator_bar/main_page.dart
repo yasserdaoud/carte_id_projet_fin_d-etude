@@ -27,20 +27,17 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     List<Widget> pages = [
 
-     /* MrtdHomePage(
-        mrtdData: widget.mrtdData,
-        rawHandSignatureData: widget.rawHandSignatureData,
-        mrzResult: widget.mrtdData.mrzResult, // Assuming MrtdData has an mrzResult field
-      ),*/
       ProfilePage(
         mrtdData: widget.mrtdData,
         rawHandSignatureData: widget.rawHandSignatureData,
       ),
+
       EmulationPage(
         mrtdData: widget.mrtdData,
       ),
       CardPage(
         mrtdData: widget.mrtdData,
+        rawHandSignatureData: widget.rawHandSignatureData,
       ),
     ];
 
@@ -57,10 +54,7 @@ class _MainPageState extends State<MainPage> {
         selectedItemColor: Colors.amber,
         unselectedItemColor: Colors.white,
         items: const [
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),*/
+
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

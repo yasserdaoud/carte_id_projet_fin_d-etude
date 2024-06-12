@@ -2,13 +2,24 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_face_api/face_api.dart' as regula;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../common/capture_face_view.dart';
 import '../common/snack_bars.dart';
 import '../models/user.dart';
+import 'scanning_animation/animated_view.dart';
 import 'user_authenticated_page.dart';
+import 'dart:typed_data';
+import '../../utils/nfc/format/mrtd_data.dart';
 
 class AuthenticateUserPage extends StatefulWidget {
-  const AuthenticateUserPage({super.key});
+  final MrtdData mrtdData;
+  final Uint8List? rawHandSignatureData;
+
+  const AuthenticateUserPage({
+    Key? key,
+    required this.mrtdData,
+    this.rawHandSignatureData,
+  }) : super(key: key);
 
   @override
   State<AuthenticateUserPage> createState() => _AuthenticateUserPageState();
@@ -28,7 +39,7 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
+      appBar:AppBar(
         backgroundColor: Colors.black,
         title: const Text(
           "Bitaka ID",
@@ -41,7 +52,9 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 60), // Add some space below the AppBar
+
+            SizedBox(height: 20),
             Stack(
               children: [
                 CaptureFaceView(
@@ -57,15 +70,15 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
                   const Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 240),
-                      //child: AnimatedView(),
+                      padding: EdgeInsets.only(top: 110),
+                      child: AnimatedView(),
                     ),
                   ),
               ],
             ),
             if (canAuthenticate)
               Padding(
-                padding: const EdgeInsets.only(top: 10), // Added top padding
+                padding: const EdgeInsets.only(top: 20), // Added top padding
                 child: SizedBox(
                   width: 300,
                   height: 50,
@@ -82,9 +95,9 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
                         if (snap.docs.isNotEmpty) {
                           for (var doc in snap.docs) {
                             try {
-                              final user = User.fromJson(doc.data());
+                              final user = User.fromJson(doc.data() ?? {});
 
-                              if (user.image.isEmpty) {
+                              if (user.image == null || user.image.isEmpty) {
                                 print('User image is null or empty');
                                 continue;
                               }
@@ -98,7 +111,7 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
                               var value = await regula.FaceSDK.matchFaces(jsonEncode(request));
                               var response = regula.MatchFacesResponse.fromJson(json.decode(value));
 
-                              if (response != null) {
+                              if (response != null && response.results != null) {
                                 var str = await regula.FaceSDK.matchFacesSimilarityThresholdSplit(jsonEncode(response.results), 0.75);
                                 var split = regula.MatchFacesSimilarityThresholdSplit.fromJson(json.decode(str));
 
@@ -110,12 +123,16 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
 
                                     if (double.parse(similarity) > 90.00) {
                                       faceMatched = true;
+
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      await prefs.setBool('isSignedIn', true);
+
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => UserAuthenticatedPage(
-                                              Firstname: user.firstName,
-                                              lastname: user.lastName,
-                                          ),
+                                          builder: (context) => UserAuthenticatedPage(Firstname: user.firstName,
+                                            Lastname: user.lastName,
+                                            mrtdData: widget.mrtdData,
+                                            rawHandSignatureData: widget.rawHandSignatureData,),
                                         ),
                                       );
                                       break;
@@ -133,7 +150,7 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
                           });
 
                           if (!faceMatched) {
-                            errorSnackBar(context, 'Sorry you have a problem!');
+                            errorSnackBar(context, 'You are Not the Owner Of this ID card \n If you insist take another Picture and Try again ! ');
                           }
                         } else {
                           errorSnackBar(context, 'Sorry retry');
@@ -146,22 +163,29 @@ class _AuthenticateUserPageState extends State<AuthenticateUserPage> {
                         errorSnackBar(context, 'Error during authentication. Please try again.');
                       });
                     },
-                    child: Text('Confirm your Identity'),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.check_outlined, color: Colors.black,),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Confirm',
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                      ],
+                    ),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.primary,
-                      backgroundColor: Theme.of(context).colorScheme.background,
+                      backgroundColor: Colors.amber,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 76.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
-                          width: 2.0,
-                        ), // Border color and width
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                     // elevation: 5,
                     ),
                   ),
                 ),
               ),
+            SizedBox()
           ],
         ),
       ),

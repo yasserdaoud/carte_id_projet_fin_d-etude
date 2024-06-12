@@ -55,6 +55,11 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
+          title: const Text(
+            "Bitaka ID",
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
           leading: BackButton(
             onPressed: () {
               Navigator.push(
@@ -99,7 +104,7 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
               ),
               const SizedBox(height: 20),
               AnimatedSwitcher(
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 1000),
                 child: _isAuthenticating
                     ? Lottie.asset(
                   'assets/animation/Animation.json',
@@ -126,7 +131,7 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
                     children: [
                       Icon(Icons.fingerprint_sharp),
                       SizedBox(width: 8.0),
-                      Text('Authenticate'),
+                      Text('Authenticate', style: TextStyle(fontSize: 18, color: Colors.black),),
                     ],
                   ),
                   key: ValueKey('button'),

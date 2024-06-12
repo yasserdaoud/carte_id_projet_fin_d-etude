@@ -34,12 +34,12 @@ class _CaptureFaceViewState extends State<CaptureFaceView> {
       children: [
         //SizedBox(height: 80),
         Text(
-          'FaceID authentification',
+          'FaceID authentication',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Colors.grey[850]?.withOpacity(0.9),
           ),
         ),
        // SizedBox(height: 50),
@@ -49,23 +49,36 @@ class _CaptureFaceViewState extends State<CaptureFaceView> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
-            color: Theme.of(context).colorScheme.onBackground,
+            color: Colors.grey[850]?.withOpacity(0.9),
           ),
         ),
         SizedBox(height: 50),
-        CircleAvatar(
-          radius: 100,
-          backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.1),
-          backgroundImage: _image == null ? null : FileImage(_image!),
-          child: _image == null
-              ?  Center(
-                  child: Image.asset(
-                    "assets/face_id.png",
-                    height: 200,
-                  ),
-                )
-              : null,
+        Container(
+          width: 220, // Adjust based on the size you need
+          height: 220, // Adjust based on the size you need
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.amber, // Border color
+              width: 4.0, // Border width
+            ),
+          ),
+          child: CircleAvatar(
+            radius: 100,
+            backgroundColor: Colors.black,
+            backgroundImage: _image == null ? null : FileImage(_image!),
+            child: _image == null
+                ? Center(
+              child: Image.asset(
+                "assets/face_id.png",
+                height: 200,
+                fit: BoxFit.cover, // Ensures the image fits well
+              ),
+            )
+                : null,
+          ),
         ),
+
         GestureDetector(
           onTap: () async {
             setState(() {
@@ -94,24 +107,48 @@ class _CaptureFaceViewState extends State<CaptureFaceView> {
           child: Container(
             margin: const EdgeInsets.only(top: 60),
             height: 80,
-            decoration:  BoxDecoration(
+            width: 80, // Ensure the container is circular
+            decoration: BoxDecoration(
               gradient: RadialGradient(
-                stops: [0.9, 0.65, 1],
+                center: Alignment.center,
+                radius: 0.85,
+                focal: Alignment.center,
+                focalRadius: 0.1,
+                stops: [0.7, 1.0],
                 colors: [
-                  Theme.of(context).colorScheme.secondary,
-                  Theme.of(context).colorScheme.background,
-                  Theme.of(context).colorScheme.secondary,
+                  Colors.black,
+                  Colors.amber,
                 ],
               ),
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(0, 3), // Changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                color: Colors.amber,
+                width: 2,
+              ),
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.camera_alt, // Replace with the desired icon
+                color: Colors.amber,
+                size: 48,
+              ),
             ),
           ),
+
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         Text(
           'take a picture',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
+            color: Colors.amber,
           ),
         ),
         const SizedBox(height: 20),

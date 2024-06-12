@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
       title: "Bitaka ID",
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber)),
       home: const NfcApp(),
     );
   }
@@ -107,10 +107,7 @@ class NfcApp extends StatelessWidget {
                 },
                 child: const Text(
                   "Start",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
               ),
 

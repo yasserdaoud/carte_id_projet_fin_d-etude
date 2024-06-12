@@ -325,25 +325,24 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
                   ElevatedButton(
                     onPressed: _readMRTD,
                     style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
                       backgroundColor: Colors.amber,
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 2.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.nfc_outlined, color: Colors.grey[850]?.withOpacity(0.9)),
-                        SizedBox(width: 8),
-                        Text(
-                          'Start read NFC',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[850]?.withOpacity(0.9),
-                          ),
-                        ),
+                         Icon(Icons.nfc_outlined),
+                          SizedBox(width: 8.0),
+                          Text('Start read', style: TextStyle(fontSize: 18, color: Colors.black),),
+
                       ],
                     ),
                   ),
@@ -353,25 +352,26 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
                   ElevatedButton(
                     onPressed: _openSettings,
                     style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
                       backgroundColor: Colors.amber,
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
+                        side: BorderSide(
+                          color: Colors.black,
+                          width: 2.0,
+                        ),
                       ),
+                      padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.settings, color: Colors.grey[850]?.withOpacity(0.9)),
-                        SizedBox(width: 8),
+                        Icon(Icons.settings, ),
+                        SizedBox(width: 8.0),
                         Text(
                           'Enable NFC',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[850]?.withOpacity(0.9),
+                           style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
-                        ),
                       ],
                     ),
                   ),

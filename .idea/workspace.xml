@@ -21,27 +21,21 @@
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/scansolutions/id_card_example/CardService.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/scansolutions/id_card_example/DatabaseHelper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/scansolutions/id_card_example/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/scansolutions/id_card_example/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/xml/nfc_tech.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/xml/nfc_tech.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_overlay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_overlay.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/authenticate_user_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/authenticate_user_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_circle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_circle.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/user_authenticated_page.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/common/capture_face_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/common/capture_face_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/choose_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/choose_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/reader_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/reader_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/emulation_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/emulation_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/my_host_apdu_service.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/data_save.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/export_data.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/back.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/back.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/card_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/card_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/front.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/front.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/id_card_class.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/main_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/main_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/profile.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />

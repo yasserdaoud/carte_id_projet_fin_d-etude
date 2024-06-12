@@ -1,23 +1,23 @@
-import 'dart:math' as math; // Import math to use math.pi for rotation
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../../nfc/format/mrtd_data.dart';
+import 'dart:typed_data';
 
 class IDCardBackWidget extends StatelessWidget {
-  final String lastName = 'DAOUD';
-  final String firstName = 'YASSER';
-  final String mrzCode = 'IDDZA402837090くくくくくくくくくくくくくくくく\n9812161M3209044DZAくくくくくくくくくくくく8\nDAOUDくくYASSERくくくくくくくくくくくくくくく';
-  final String yearOfBirth = '1998';
+  final MrtdData mrtdData;
+  final Uint8List? rawHandSignatureData;
 
-  const IDCardBackWidget({super.key});
+  const IDCardBackWidget({required this.mrtdData, this.rawHandSignatureData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 583.2, // CR80 card size in points
+      width: 550.2, // CR80 card size in points
       height: 367.2,
       decoration: BoxDecoration(
         image: const DecorationImage(
-          image: AssetImage('assets/face.png'),
-          //fit: BoxFit.cover,
+          image: AssetImage('assets/back_id_card.png'),
+          // fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(15),
         boxShadow: const [
@@ -33,67 +33,44 @@ class IDCardBackWidget extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned(
-              left: 110, // Changed from right to left
-              top: 288,
-
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(math.pi), // Mirrors the widget horizontally
-                child: Transform.rotate(
-                  angle: math.pi, // Rotates the widget 180 degrees
-                  child: Text(lastName, style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20, fontWeight: FontWeight.bold)),
+              left: 140,
+              top: 107,
+              child: Text(
+                mrtdData.dg1?.mrz.documentNumber ?? '',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Positioned(
-              left: 70, // Changed from right to left
-              top: 325,
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(math.pi), // Mirrors the widget horizontally
-                child: Transform.rotate(
-                  angle: math.pi, // Rotates the widget 180 degrees
-                  child: Text(firstName, style: const TextStyle(                      color: Colors.black,
-                      fontSize: 20, fontWeight: FontWeight.bold)),
+              left: 110,
+              top: 139,
+              child: Text(
+                mrtdData.dg1 != null
+                    ? DateFormat('dd.MM.yyyy').format(mrtdData.dg1!.mrz.dateOfExpiry)
+                    : '',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            Positioned(
-              left: 208, // Changed from right to left
-              top: 223,
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(math.pi), // Mirrors the widget horizontally
-                child: Transform.rotate(
-                  angle: math.pi, // Rotates the widget 180 degrees
-                  child: Text(yearOfBirth, style: const TextStyle(                      color: Colors.black,
-                      fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 20, // Changed from right to left
-              top: 20,
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.rotationY(math.pi), // Mirrors the widget horizontally
-                child: Transform.rotate(
-                  angle: math.pi, // Rotates the widget 180 degrees
-                  child: Text(
-                    mrzCode,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.2, // Adjust the value to control the spacing
-                    ),
-                    textAlign: TextAlign.left,
+            if (rawHandSignatureData != null)
+              Positioned(
+                right: 20,
+                top: 185,
+                child: Container(
+                  width: 150,
+                  height: 70,
+                  child: Image.memory(
+                    rawHandSignatureData!,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),

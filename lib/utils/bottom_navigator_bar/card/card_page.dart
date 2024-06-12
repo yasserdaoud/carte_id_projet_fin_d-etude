@@ -1,14 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import '../../nfc/format/mrtd_data.dart';
-import 'id_card_class.dart';
+import 'back.dart';
+import 'front.dart';
+import 'dart:typed_data';
+
 
 
 
 class CardPage extends StatefulWidget {
   final MrtdData mrtdData;
+  final Uint8List? rawHandSignatureData;
 
-  CardPage({required this.mrtdData});
+  CardPage({required this.mrtdData,this.rawHandSignatureData});
   @override
   _CardPageState createState() => _CardPageState();
 }
@@ -20,8 +26,14 @@ class _CardPageState extends State<CardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text(
+          "Bitaka ID",
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Stack(
@@ -31,7 +43,8 @@ class _CardPageState extends State<CardPage> {
               physics:  NeverScrollableScrollPhysics(),
               children:   [
 
-                Center(child: CardView()),
+                Center(child: IDCard(mrtdData: widget.mrtdData,
+                  rawHandSignatureData: widget.rawHandSignatureData, )),
 
               ],
             ),
@@ -42,47 +55,75 @@ class _CardPageState extends State<CardPage> {
     );
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+
 }
 
 
-class CardView extends StatelessWidget {
-  const CardView({super.key});
+class IDCard extends StatefulWidget {
+  final MrtdData mrtdData;
+  final Uint8List? rawHandSignatureData;
 
-  Future<void> _handleRefresh() async {
-    return await Future.delayed(const Duration(seconds: 2));
+  const IDCard({required this.mrtdData, this.rawHandSignatureData, Key? key}) : super(key: key);
+
+  @override
+  _IDCardState createState() => _IDCardState();
+}
+
+class _IDCardState extends State<IDCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _controller.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _toggleCard() {
+    if (_controller.isCompleted) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //  backgroundColor: Theme.of(context).colorScheme.background,
-      body: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: LiquidPullToRefresh(
-          onRefresh: _handleRefresh,
-          color: Theme.of(context).colorScheme.background,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          animSpeedFactor: 2,
-          child: ListView(
-            children: const [
-              Padding(
-                padding: EdgeInsets.all(0), // Adjust the padding as needed
-                child: Align(
-                  alignment: Alignment.topCenter, // Changed to topCenter for slight lower positioning
-                  child: RotatedBox(
-                    quarterTurns: 3,
-                    child: IDCard(),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+    return GestureDetector(
+      onTap: _toggleCard,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (_, child) {
+          final angle = _controller.value * pi;
+          // Adjust the angle for a smoother transition and perspective.
+          final transform = Matrix4.identity()
+            ..setEntry(3, 2, 0.001) // add perspective
+            ..rotateX(angle);
+
+          // Toggle the child widget at the half rotation point.
+          if (angle >= pi / 2) {
+            transform.rotateX(pi); // complete the flip
+          }
+
+          return Transform(
+            transform: transform,
+            alignment: Alignment.center,
+            child: angle >= pi / 2 ? IDCardBackWidget(mrtdData: widget.mrtdData,
+              rawHandSignatureData: widget.rawHandSignatureData,) :
+            IDCardFrontWidget(mrtdData: widget.mrtdData),
+          );
+        },
       ),
     );
   }

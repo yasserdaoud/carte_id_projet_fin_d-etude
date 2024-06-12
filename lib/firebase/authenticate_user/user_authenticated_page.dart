@@ -1,121 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:id_card_example/screen/finger_print_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../utils/bottom_navigator_bar/main_page.dart';
+import 'dart:typed_data';
+import '../../utils/nfc/format/mrtd_data.dart';
+
+
+
 
 
 class UserAuthenticatedPage extends StatelessWidget {
   final String Firstname;
-  final String lastname;
-
+  final String Lastname;
+  final MrtdData mrtdData;
+  final Uint8List? rawHandSignatureData;
 
   const UserAuthenticatedPage({
     required this.Firstname,
-    required this.lastname,
+    required this.Lastname,
+    required this.mrtdData,
+    this.rawHandSignatureData,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: Text(
-            'INTAKHIB',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          elevation: 0,
-          centerTitle: true,
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text(
+          "Bitaka ID",
+          style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
       ),
       body: Padding(
+
         padding: const EdgeInsets.all(30.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Successfully authenticated',
+              'Welcome $Lastname $Firstname !',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold, // Make the text bold for emphasis
               ),
             ),
+            SizedBox(height: 20),
             Container(
               height: 100,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2,
-                  color: Colors.white,
-                ),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 48,
-                ),
+              width: 100,
+              child: Image.asset(
+                'assets/check.png',
+                fit: BoxFit.cover,
               ),
             ),
-            Text(
-                  'Welcome ${Firstname} ${lastname}!',
-              textAlign: TextAlign.center,
-              style:  TextStyle(
 
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 30,
-              ),
-            ),
+            SizedBox(height: 80),
             Text(
-              'You have been successfully Authenticated !',
+              'You have been successfully authenticated!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.white,
                 fontWeight: FontWeight.w400,
                 fontSize: 18,
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 300,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return FingerPrintPage();
-                        },
+            SizedBox(height: 30),
+            SizedBox(
+              width: 300,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('isSignedIn', true);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainPage(
+                        mrtdData: mrtdData,
+                        rawHandSignatureData: rawHandSignatureData,
                       ),
-                    );
-                  },
-                  child: Text('continue'),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Theme.of(context).colorScheme.background,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary,
-                        width: 2.0,
-                      ), // Border color and width
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 12.0),
+                  );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.arrow_forward, color: Colors.black),
+                    SizedBox(width: 8),
+                    Text(
+                      'Continue',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  backgroundColor: Colors.amber,
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 76.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    side: BorderSide(
+                      color: Colors.amber,
+                      width: 2.0,
+                    ),
                   ),
+                  elevation: 5,
                 ),
               ),
             ),
-
           ],
         ),
       ),

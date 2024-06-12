@@ -322,10 +322,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_face_api
-      sha256: dda63309b91009063085b6e640664394dbe6a6d30f6b7feb236798e2024d0c6c
+      sha256: fd4eb1ab8412c2326ef9b2e9a8385d77e1a2c149cb22135c23681a50676f98ca
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "4.1.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -1038,7 +1038,7 @@ packages:
     source: hosted
     version: "1.0.3"
   typed_data:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: typed_data
       sha256: facc8d6582f16042dd49f2463ff1bd6e2c9ef9f3d5da3d9b087e244a7b564b3c

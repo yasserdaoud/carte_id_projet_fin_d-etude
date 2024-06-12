@@ -112,16 +112,12 @@ class MrtdForm extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
                   backgroundColor: Colors.amber,
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 76.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 2.0,
-                    ),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
+                  elevation: 5,
                 ),
                 onPressed: isDisabled
                     ? null
@@ -133,9 +129,7 @@ class MrtdForm extends StatelessWidget {
                 child: Text(
                   'Submit',
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    fontSize: 18, color: Colors.black,
                   ),
                 ),
               ),

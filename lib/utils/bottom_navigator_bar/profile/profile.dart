@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import '../../../firebase/authenticate_user/authenticate_user_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../main.dart';
 import '../../nfc/format/mrtd_data.dart';
+
 
 class ProfilePage extends StatefulWidget {
   final MrtdData mrtdData;
   final Uint8List? rawHandSignatureData;
-  final bool isVotingStarted;
 
-  ProfilePage({required this.mrtdData, this.rawHandSignatureData, this.isVotingStarted = false});
+
+  ProfilePage({required this.mrtdData, this.rawHandSignatureData});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -22,117 +22,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool _isVisible = true;
-  bool _nfcAvailable = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _checkNfcAvailability();
-  }
-
-  void _checkNfcAvailability() async {
-    bool isAvailable = await NfcManager.instance.isAvailable();
-    setState(() {
-      _nfcAvailable = isAvailable;
-    });
-    if (isAvailable) {
-      _startNfcSession();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('NFC is not available on this device')),
-      );
-    }
-  }
-
-  void _startNfcSession() {
-    NfcManager.instance.startSession(
-      onDiscovered: (NfcTag tag) async {
-        try {
-          var ndef = Ndef.from(tag);
-          if (ndef == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Tag is not NDEF')),
-            );
-            NfcManager.instance.stopSession(errorMessage: "Tag is not NDEF");
-            return;
-          }
-
-          await _sendNfcData(ndef);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Message sent successfully')),
-          );
-          NfcManager.instance.stopSession();
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error sending message: $e')),
-          );
-          NfcManager.instance.stopSession(errorMessage: e.toString());
-        }
-      },
-      onError: (error) async {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('NFC Error: $error')),
-        );
-      },
-    );
-  }
-
-  Future<void> _saveProfile() async {
-    var profileData = {
-      'firstName': widget.mrtdData.dg1!.mrz.firstName,
-      'lastName': widget.mrtdData.dg1!.mrz.lastName,
-      'documentNumber': widget.mrtdData.dg1!.mrz.documentNumber,
-      'dateOfBirth': DateFormat.yMd().format(widget.mrtdData.dg1!.mrz.dateOfBirth),
-      'nationality': widget.mrtdData.dg1!.mrz.nationality,
-      'expiryDate': DateFormat.yMd().format(widget.mrtdData.dg1!.mrz.dateOfExpiry),
-      'image': base64Encode(widget.mrtdData.dg2!.imageData!), // Encoding image to base64 string
-      'nationalIdentificationNumber': widget.mrtdData.dg11!.personalNumber,
-    };
-
-    // Save to Firestore
-    FirebaseFirestore.instance.collection('users').add(profileData).then((docRef) {
-      print("User data saved to Firestore with ID: ${docRef.id}");
-      print("National identification number: ${widget.mrtdData.dg11!.personalNumber}");
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => AuthenticateUserPage(),
-        ),
-      );
-    }).catchError((error) {
-      print("Failed to save user data: $error");
-    });
-  }
-
-
-  Future<void> _sendNfcData(Ndef ndef) async {
-    try {
-      final Map<String, dynamic> data = {
-        'firstName': widget.mrtdData.dg1?.mrz.firstName,
-        'lastName': widget.mrtdData.dg1?.mrz.lastName,
-        'documentNumber': widget.mrtdData.dg1?.mrz.documentNumber,
-        'dateOfBirth': widget.mrtdData.dg1?.mrz.dateOfBirth.toIso8601String(),
-        'nationality': widget.mrtdData.dg1?.mrz.nationality,
-        'dateOfExpiry': widget.mrtdData.dg1?.mrz.dateOfExpiry.toIso8601String(),
-        'imageData': widget.mrtdData.dg2?.imageData != null
-            ? base64Encode(widget.mrtdData.dg2!.imageData!)
-            : null,
-        'signatureData': widget.rawHandSignatureData != null
-            ? base64Encode(widget.rawHandSignatureData!)
-            : null,
-      };
-      final String jsonData = jsonEncode(data);
-
-      // Create NDEF message
-      NdefMessage ndefMessage = NdefMessage([
-        NdefRecord.createText(jsonData),
-      ]);
-
-      await ndef.write(ndefMessage);
-    } catch (e) {
-      print('Failed to send NFC data: ${e.toString()}');
-      throw e;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +43,15 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: EdgeInsets.only(left: 16),
             child: CircleAvatar(
               backgroundImage: MemoryImage(widget.mrtdData.dg2!.imageData!),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.amber, // Couleur de la bordure
+                    width: 2.0, // Épaisseur de la bordure
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -179,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
             _isVisible ? _profileDetails() : Container(),
             _isVisible ? _signatureSection() : Container(),
             SizedBox(height: 40),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -189,7 +88,10 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(
       context: context,
       builder: (context) => GestureDetector(
-        onTap: () => Navigator.pop(context),
+        onTap: () {
+          Navigator.pop(context);
+          _showFullSizeImageWithoutBackground(context, imageData);
+        },
         child: Dialog(
           backgroundColor: Colors.transparent,
           child: Stack(
@@ -231,6 +133,36 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showFullSizeImageWithoutBackground(BuildContext context, Uint8List imageData) {
+    showDialog(
+      context: context,
+      builder: (context) => Material(
+        color: Colors.transparent,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image(
+                  image: MemoryImage(imageData),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -313,12 +245,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: widget.rawHandSignatureData != null
-                    ? Image.memory(
+                child: Image.memory(
                   widget.rawHandSignatureData!,
                   fit: BoxFit.contain,
-                )
-                    : Text('Pas de données de signature'),
+                ),
               ),
             ),
           ],
@@ -352,6 +282,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+
+
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();

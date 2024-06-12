@@ -58,22 +58,6 @@ class ResultPage extends StatelessWidget {
     );
   }
 
-  Widget _buildImageSection(Uint8List imageData) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.memory(
-            imageData,
-            errorBuilder: (context, error, stackTrace) => const SizedBox(),
-          ),
-        ),
-        const SizedBox(height: 10), // Add spacing between sections
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,47 +98,49 @@ class ResultPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              if (jpegImage != null) _buildImageSection(jpegImage!),
-              if (rawHandSignatureData != null) _buildImageSection(rawHandSignatureData!),
+              //if (jpegImage != null) _buildImageSection(jpegImage!),
+              //if (rawHandSignatureData != null) _buildImageSection(rawHandSignatureData!),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   await _saveProfile(context);
 
-                 // SharedPreferences prefs = await SharedPreferences.getInstance();
-                 // await prefs.setBool('isSignedIn', true);
+
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AuthenticateUserPage(),
-                       // MainPage(
-                        //  mrtdData: _mrtdData,
-                         // rawHandSignatureData: rawHandSignatureData,
-                       // )
+                      builder: (context) =>
+                          AuthenticateUserPage( mrtdData: _mrtdData,
+                            rawHandSignatureData: rawHandSignatureData,),
+                       //MainPage(
+                       // mrtdData: _mrtdData,
+                        //rawHandSignatureData: rawHandSignatureData,
+                      // )
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
                   backgroundColor: Colors.amber,
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
                   ),
+                  padding: EdgeInsets.symmetric(horizontal: 76.0, vertical: 12.0),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.check, color: Colors.grey[850]?.withOpacity(0.9)),
+                    Icon(Icons.check),
                     const SizedBox(width: 8),
                     Text(
                       'Confirm',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[850]?.withOpacity(0.9),
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -165,17 +151,21 @@ class ResultPage extends StatelessWidget {
       ),
     );
   }
-  Future<void> _saveProfile(BuildContext context) async {
-    var profileData = {
-      'firstName': _mrtdData.dg1!.mrz.firstName,
-      'lastName': _mrtdData.dg1!.mrz.lastName,
-      'documentNumber': _mrtdData.dg1!.mrz.documentNumber,
-      'dateOfBirth': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfBirth),
-      'nationality': _mrtdData.dg1!.mrz.nationality,
-      'expiryDate': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfExpiry),
-      'image': base64Encode(_mrtdData.dg2!.imageData!), // Encoding image to base64 string
-      'nationalIdentificationNumber': _mrtdData.dg11!.personalNumber,
-    };
+
+
+
+    Future<void> _saveProfile(BuildContext context) async {
+      var profileData = {
+        'documentNumber': _mrtdData.dg1!.mrz.documentNumber,
+        'firstName': _mrtdData.dg1!.mrz.firstName,
+        'lastName': _mrtdData.dg1!.mrz.lastName,
+        'dateOfBirth': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfBirth),
+        'nationality': _mrtdData.dg1!.mrz.nationality,
+        'dateOfExpiry': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfExpiry),
+        'imageData': _mrtdData.dg2!.imageData,
+        'nationalIdentificationNumber': _mrtdData.dg11!.personalNumber,
+      };
+
 
     // Save to Firestore
     FirebaseFirestore.instance.collection('users').add(profileData).then((docRef) {
@@ -183,7 +173,8 @@ class ResultPage extends StatelessWidget {
       print("National identification number: ${_mrtdData.dg11!.personalNumber}");
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AuthenticateUserPage(),
+          builder: (context) => AuthenticateUserPage( mrtdData: _mrtdData,
+            rawHandSignatureData: rawHandSignatureData,),
         ),
       );
     }).catchError((error) {
