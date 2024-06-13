@@ -196,7 +196,7 @@ class _MrtdHomePageState extends State<MrtdHomePage> {
       if (e is PassportError) {
         if (se.contains("security status not satisfied")) {
           alertMsg =
-          "Failed to initiate session with passport.\nCheck input profile!";
+          "Failed to initiate session with passport.\nCheck input profile1!";
         }
         _log.error("PassportError: ${e.message}");
       } else {

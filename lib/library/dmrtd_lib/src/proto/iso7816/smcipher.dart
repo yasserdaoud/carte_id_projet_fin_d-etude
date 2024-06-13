@@ -2,8 +2,8 @@
 import 'dart:typed_data';
 
 abstract class SMCipher {
-  /// Encrypts [profile] to be used in Secure Messaging.
-  /// [profile] must be padded (if needed) before calling this function.
+  /// Encrypts [profile1] to be used in Secure Messaging.
+  /// [profile1] must be padded (if needed) before calling this function.
   Uint8List encrypt(final Uint8List data);
 
   /// Decrypts [edata] from Secure Messaging.
@@ -11,7 +11,7 @@ abstract class SMCipher {
   Uint8List decrypt(final Uint8List edata);
 
 
-  /// Calculates MAC of [profile].
-  /// [profile] must be padded (if needed) before calling this function.
+  /// Calculates MAC of [profile1].
+  /// [profile1] must be padded (if needed) before calling this function.
   Uint8List mac(final Uint8List data);
 }

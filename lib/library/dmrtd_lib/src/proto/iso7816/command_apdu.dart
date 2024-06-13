@@ -14,13 +14,13 @@ class CommandAPDU {
 
   /// Required parameters are [cla], [ins], [p1], [p2].
   ///
-  /// [profile] represents additional command profile and is optional.
-  /// Max [profile] length is 65535.
+  /// [profile1] represents additional command profile1 and is optional.
+  /// Max [profile1] length is 65535.
   ///
   /// [ne] is optional and represents expected response length.
   /// Max [ne] is 65536.
   /// If [ne] is set to 0, [ne] won't be serialized and send with the command.
-  /// If [ne] is set to 256 or 65536 [ne] will be encoded as 0x00, which means arbitrary long profile is expected in the response.
+  /// If [ne] is set to 256 or 65536 [ne] will be encoded as 0x00, which means arbitrary long profile1 is expected in the response.
   CommandAPDU({ required int cla, required int ins, required int p1, required int p2, final Uint8List? data, int ne = 0}) {
     this.cla  = cla;
     this.ins  = ins;
@@ -73,7 +73,7 @@ class CommandAPDU {
   Uint8List? get data => _data;
   set data(Uint8List? data) {
     if(data != null && data.length > 0xffff) {
-      throw ArgumentError.value(data, "profile", "Command APDU invalid parameter value");
+      throw ArgumentError.value(data, "profile1", "Command APDU invalid parameter value");
     }
     _data = data;
   }

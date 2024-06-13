@@ -16,6 +16,6 @@ String formatMRZ(final MRZ mrz) {
       "-Date of Birth: ${DateFormat.yMd().format(mrz.dateOfBirth)}\n" +
       "-Date of Expiry: ${DateFormat.yMd().format(mrz.dateOfExpiry)}\n";
 }
-// "Additional profile 1: ${mrz.optionalData}\n" +
-// "Additional profile 2: ${mrz.optionalData2 ?? 'None'}";
+// "Additional profile1 1: ${mrz.optionalData}\n" +
+// "Additional profile1 2: ${mrz.optionalData2 ?? 'None'}";
 

@@ -12,7 +12,7 @@ class IDCardBackWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 550.2, // CR80 card size in points
+      width: 550.2, // CR80 card1 size in points
       height: 367.2,
       decoration: BoxDecoration(
         image: const DecorationImage(

@@ -30,7 +30,7 @@ class ResponseAPDU {
   Uint8List toBytes() => Uint8List.fromList((_data ?? Uint8List(0))  + _sw.toBytes());
 
   @override
-  String toString() => '$status profile=${_data?.hex()}';
+  String toString() => '$status profile1=${_data?.hex()}';
 }
 
 /// Class represents trailer status bytes of ISO/IEC 7816-4 response APDU.
@@ -80,7 +80,7 @@ class StatusWord {
   // Normal processing - success
   static const success                           = StatusWord(sw1: 0x90, sw2: 0x00);
   static const int sw1SuccessWithRemainingBytes  = 0x61; // This is considered as normal status e.g. success.
-                                                         // SW2 indicates a number of extra profile bytes still available.
+                                                         // SW2 indicates a number of extra profile1 bytes still available.
                                                          // Can be returned by GET RESPONSE command (ISO 7816-4 section 7)
 
   static remainingAvailableResponseBytes(int numBytes) {
@@ -99,7 +99,7 @@ class StatusWord {
 
   static StatusWord fromBytes(Uint8List data, [int offset = 0]) {
     if(data.length < 2 ) {
-      throw ArgumentError.value(data, "profile", "Argument length too small");
+      throw ArgumentError.value(data, "profile1", "Argument length too small");
     }
     if(data.length - offset < 2) {
       throw ArgumentError.value(offset, "offset", "Argument out of bounds");
@@ -140,7 +140,7 @@ class StatusWord {
 
   String description() {
          if (this == noInformationGiven)               { return "No information given";                         }
-    else if (this == possibleCorruptedData)            { return "Part of returned profile my be corrupted";        }
+    else if (this == possibleCorruptedData)            { return "Part of returned profile1 my be corrupted";        }
     else if (this == unexpectedEOF)                    { return "End of file reached before reading Le bytes";  }
     else if (this == selectedFileInvalidated)          { return "Selected file invalidated";                    }
     else if (this == wrongFCIFormat)                   { return "FCI not formatted according to 5.1.5";         }
@@ -152,13 +152,13 @@ class StatusWord {
     else if (this == incompatibleFileStructureCommand) { return "Command incompatible with file structure";     }
     else if (this == securityStatusNotSatisfied)       { return "Security status not satisfied";                }
     else if (this == authenticationMethodBlocked)      { return "Authentication method blocked";                }
-    else if (this == referencedDataInvalidated)        { return "Referenced profile invalidated";                  }
+    else if (this == referencedDataInvalidated)        { return "Referenced profile1 invalidated";                  }
     else if (this == conditionsNotSatisfied)           { return "Conditions of use not satisfied";              }
     else if (this == commandNotAllowedNoEF)            { return "Command not allowed (no current EF)";          }
-    else if (this == smDataMissing)                    { return "Expected SM profile objects missing";             } // SM - Secure messaging
-    else if (this == smDataInvalid)                    { return "SM profile objects incorrect";                    } // SM - Secure messaging
+    else if (this == smDataMissing)                    { return "Expected SM profile1 objects missing";             } // SM - Secure messaging
+    else if (this == smDataInvalid)                    { return "SM profile1 objects incorrect";                    } // SM - Secure messaging
     else if (this == wrongParameters)                  { return "Wrong parameter(s) P1-P2";                     }
-    else if (this == invalidDataFieldParameters)       { return "Incorrect parameters in the profile field";       }
+    else if (this == invalidDataFieldParameters)       { return "Incorrect parameters in the profile1 field";       }
     else if (this == notSupported)                     { return "Function not supported";                       }
     else if (this == fileNotFound)                     { return "File not found";                               }
     else if (this == recordNotFound)                   { return "Record not found";                             }
@@ -166,7 +166,7 @@ class StatusWord {
     else if (this == lcInconsistentWithTLV)            { return "Lc inconsistent with TLV structure";           }
     else if (this == incorrectParameters)              { return "Incorrect parameters P1-P2";                   }
     else if (this == lcInconsistentWithParameters)     { return "Lc inconsistent with P1-P2";                   }
-    else if (this == referencedDataNotFound)           { return "Referenced profile not found";                    }
+    else if (this == referencedDataNotFound)           { return "Referenced profile1 not found";                    }
     else if (this == wrongParameters2)                 { return "Wrong parameter(s) P1-P2";                     }
     else if (this == invalidInstructionCode)           { return "Instruction code not supported or invalid";    }
     else if (this == classNotSupported)                { return "Class not supported";                          }

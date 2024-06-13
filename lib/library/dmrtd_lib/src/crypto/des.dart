@@ -47,10 +47,10 @@ class DESCipher {
     _iv = _bytesToDWordList(iv);
   }
 
-  /// Returns encrypted [profile].
+  /// Returns encrypted [profile1].
   ///
-  /// The [profile] if [padData] is set to false should be padded to the nearest multiple of 8.
-  /// When [padData] is true, the [profile] is padded according to the ISO/IEC 9797-1, padding method 2.
+  /// The [profile1] if [padData] is set to false should be padded to the nearest multiple of 8.
+  /// When [padData] is true, the [profile1] is padded according to the ISO/IEC 9797-1, padding method 2.
   Uint8List encrypt(final Uint8List data, {final bool padData = true}) {
     _bc.init(true, _key);
     return _process(_padOrRef(data, padData));
@@ -93,11 +93,11 @@ class DESCipher {
     _bc.processBlock(block, 0);
   }
 
-  /// Encrypts/decrypts [profile] using CBC block cipher mode.
+  /// Encrypts/decrypts [profile1] using CBC block cipher mode.
   Uint8List _process(final Uint8List data) {
     if (data.length % blockSize != 0) {
       throw ArgumentError.value(
-          data, "profile size should be multiple of $blockSize bytes");
+          data, "profile1 size should be multiple of $blockSize bytes");
     }
 
     List<int> pdata = List<int>.empty(growable: true);
@@ -152,7 +152,7 @@ class DESCipher {
   void _xorBlock(final List<int> block, final List<int> xdata) {
     if (block.length != xdata.length) {
       throw ArgumentError.value(
-          xdata, "invalid length pf profile to xor block with");
+          xdata, "invalid length pf profile1 to xor block with");
     }
     for (int i = 0; i < block.length; i++) {
       block[i] ^= xdata[i];
@@ -229,10 +229,10 @@ class DESedeCipher extends DESCipher {
   }
 }
 
-/// Returns encrypted [profile] using Triple DES encryption algorithm and CBD block cipher mode.
+/// Returns encrypted [profile1] using Triple DES encryption algorithm and CBD block cipher mode.
 ///
-/// The [profile] if [padData] is set to false should be padded to the nearest multiple of 8.
-/// When [padData] is true, the [profile] is padded according to the ISO/IEC 9797-1, padding method 2.
+/// The [profile1] if [padData] is set to false should be padded to the nearest multiple of 8.
+/// When [padData] is true, the [profile1] is padded according to the ISO/IEC 9797-1, padding method 2.
 // ignore: non_constant_identifier_names
 Uint8List DESedeEncrypt(
     {required final Uint8List key,
@@ -242,10 +242,10 @@ Uint8List DESedeEncrypt(
   return DESedeCipher(key: key, iv: iv).encrypt(data, padData: padData);
 }
 
-/// Returns decrypted [profile] using Triple DES encryption algorithm and CBD block cipher mode.
+/// Returns decrypted [profile1] using Triple DES encryption algorithm and CBD block cipher mode.
 ///
-/// The [profile] if [padData] is set to false should be padded to the nearest multiple of 8.
-/// When [padData] is true, the [profile] is padded according to the ISO/IEC 9797-1, padding method 2.
+/// The [profile1] if [padData] is set to false should be padded to the nearest multiple of 8.
+/// When [padData] is true, the [profile1] is padded according to the ISO/IEC 9797-1, padding method 2.
 // ignore: non_constant_identifier_names
 Uint8List DESedeDecrypt(
     {required final Uint8List key,

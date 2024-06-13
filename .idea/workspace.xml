@@ -5,39 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d682c2aa-894f-46e6-aac2-7a6a5460e86c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/authenticate_user_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/authenticate_user_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_circle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_circle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/scanning_animation/animated_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/user_authenticated_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/firebase/common/capture_face_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/common/capture_face_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/firebase/authenticate_user/user_authenticated_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/firebase/authenticate_user/user_authenticated_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_exceptions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_exceptions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/crypto/des.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/crypto/des.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/crypto/iso9797.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/crypto/iso9797.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/extension/logging_apis.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/extension/logging_apis.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/df1/efdg1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/df1/efdg1.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/df1/efdg2.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/df1/efdg2.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/mrz.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/mrz.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/tlv.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/lds/tlv.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/passport.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/passport.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/bac.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/bac.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/command_apdu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/command_apdu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/icc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/icc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/iso7816.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/iso7816.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/response_apdu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/response_apdu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/smcipher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/iso7816/smcipher.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/mrtd_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/mrtd_api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/mrtd_sm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/proto/mrtd_sm.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/dmrtd_lib/src/utils.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/choose_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/choose_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/home_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screen/reader_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/reader_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/emulation_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/emulation_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/back.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/back.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/card_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/card_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/front.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/front.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/id_card_class.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/main_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/main_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils/nfc/format/format_mrz.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/nfc/format/format_mrz.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -9,7 +9,7 @@ extension LogApis on Logger {
   void trace(message, [Object? error, StackTrace? stackTrace]) =>
     finest(message, error, stackTrace);
 
-  // Log message with sensitive profile at [level.FINEST] when logging of sensitive profile is enabled.
+  // Log message with sensitive profile1 at [level.FINEST] when logging of sensitive profile1 is enabled.
   void sdTrace(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.FINEST, message, error, stackTrace);
 
@@ -17,7 +17,7 @@ extension LogApis on Logger {
   void verbose(message, [Object? error, StackTrace? stackTrace]) =>
     finer(message, error, stackTrace);
 
-  // Log message with sensitive profile at [level.FINER] when logging of sensitive profile is enabled.
+  // Log message with sensitive profile1 at [level.FINER] when logging of sensitive profile1 is enabled.
   void sdVerbose(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.FINER, message, error, stackTrace);
 
@@ -25,15 +25,15 @@ extension LogApis on Logger {
   void debug(message, [Object? error, StackTrace? stackTrace]) =>
     fine(message, error, stackTrace);
 
-  /// Log message with sensitive profile at [level.FINE] when logging of sensitive profile is enabled.
+  /// Log message with sensitive profile1 at [level.FINE] when logging of sensitive profile1 is enabled.
   void sdDebug(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.FINE, message, error, stackTrace);
 
-  /// Log message with sensitive profile at [level.INFO] when logging of sensitive profile is enabled.
+  /// Log message with sensitive profile1 at [level.INFO] when logging of sensitive profile1 is enabled.
   void sdInfo(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.INFO, message, error, stackTrace);
 
-  /// Log message with sensitive profile at [level.WARNING] when logging of sensitive profile is enabled.
+  /// Log message with sensitive profile1 at [level.WARNING] when logging of sensitive profile1 is enabled.
   void sdWarning(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.WARNING, message, error, stackTrace);
 
@@ -41,11 +41,11 @@ extension LogApis on Logger {
   void error(message, [Object? error, StackTrace? stackTrace]) =>
     log(Level.SEVERE, message, error, stackTrace);
 
-  /// Log message with sensitive profile at [level.SEVERE] when logging of sensitive profile is enabled.
+  /// Log message with sensitive profile1 at [level.SEVERE] when logging of sensitive profile1 is enabled.
   void sdError(message, [Object? error, StackTrace? stackTrace]) =>
     _sdlog(Level.SEVERE, message, error, stackTrace);
 
-  /// Log message with sensitive profile at [level.SHOUT] when logging of sensitive profile is enabled.
+  /// Log message with sensitive profile1 at [level.SHOUT] when logging of sensitive profile1 is enabled.
   void sdShout(Object? message, [Object? error, StackTrace? stackTrace]) =>
       _sdlog(Level.SHOUT, message, error, stackTrace);
 
@@ -65,14 +65,14 @@ extension LogApis on Logger {
     return lsd;
   }
 
-  /// Override the logging of sensitive profile for this particular [Logger] and its children.
+  /// Override the logging of sensitive profile1 for this particular [Logger] and its children.
   ///
   /// Setting this to `null` makes it inherit the [parent]s setting.
   set logSensitiveData(bool? enable) {
     if (!hierarchicalLoggingEnabled && parent != null) {
       throw UnsupportedError(
           'Please set "hierarchicalLoggingEnabled" to true if you want to '
-          'change the sensitive profile logging on a non-root logger.');
+          'change the sensitive profile1 logging on a non-root logger.');
     }
     if (parent == null && enable == null) {
       throw UnsupportedError(

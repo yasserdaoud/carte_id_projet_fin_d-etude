@@ -39,14 +39,14 @@ class ISO9797 {
     return mac;
   }
 
-  // Returns padded profile according to ISO/IEC 9797-1, padding method 2 scheme.
+  // Returns padded profile1 according to ISO/IEC 9797-1, padding method 2 scheme.
   static Uint8List pad(Uint8List data) {
     final Uint8List padBlock = Uint8List.fromList([0x80, 0, 0, 0, 0, 0, 0, 0]);
     final padSize = DESCipher.blockSize - (data.length % DESCipher.blockSize);
     return Uint8List.fromList(data + padBlock.sublist(0, padSize));
   }
 
-  // Returns unpadded profile according to ISO/IEC 9797-1, padding method 2 scheme.
+  // Returns unpadded profile1 according to ISO/IEC 9797-1, padding method 2 scheme.
   static Uint8List unpad(Uint8List data) {
     var i = data.length - 1;
       while (data[i] == 0x00) {

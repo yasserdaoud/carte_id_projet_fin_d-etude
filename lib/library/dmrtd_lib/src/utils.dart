@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 class Utils {
-  static const bool isProfileMode = bool.fromEnvironment('dart.vm.profile', defaultValue: false);
+  static const bool isProfileMode = bool.fromEnvironment('dart.vm.profile1', defaultValue: false);
   static const bool isReleaseMode = bool.fromEnvironment('dart.vm.product', defaultValue: false);
   static const bool isDebugMode   = !isReleaseMode && !isProfileMode;
 

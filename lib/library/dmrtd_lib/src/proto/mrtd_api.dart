@@ -78,12 +78,12 @@ class MrtdApi {
   Future<void> selectMasterFile() async {
     _log.debug("Selecting root Master File");
     // In ICAO 9303 p10 doc, the command to select Master File is defined as sending select APDU
-    // command with empty profile field. On some passport this command doesn't work and MF is not selected,
+    // command with empty profile1 field. On some passport this command doesn't work and MF is not selected,
     // although success status (9000) is returned. In doc ISO/IEC 7816-4 section 6 an alternative option
     // is specified by sending the same command as described in ICAO 9303 p10 doc but in this case
-    // profile field should be equal to '0x3F00'.
+    // profile1 field should be equal to '0x3F00'.
     // see: https://cardwerk.com/smart-card-standard-iso7816-4-section-6-basic-interindustry-commands
-    //     'If P1-P2=’0000′ and if the profile field is empty or equal to ‘3F00’, then select the MF.'
+    //     'If P1-P2=’0000′ and if the profile1 field is empty or equal to ‘3F00’, then select the MF.'
     //
     // To maximize our chance for MF to be selected we send select first command with P1-P2=’0000′ as
     // specified in doc ISO/IEC 7816-4 section 6.
@@ -188,11 +188,11 @@ class MrtdApi {
           _reduceMaxRead();
         }
         else if(rapdu.status == StatusWord.possibleCorruptedData) {
-          _log.warning("Part of received profile chunk my be corrupted");
+          _log.warning("Part of received profile1 chunk my be corrupted");
         }
         else if(rapdu.status.isError()) {
           // Just making sure if an error has occured we still have valid session
-          _log.warning("An error ${rapdu.status} has occurred while reading file but have received some profile. Re-initializing SM session and trying to continue normally.");
+          _log.warning("An error ${rapdu.status} has occurred while reading file but have received some profile1. Re-initializing SM session and trying to continue normally.");
           await _reinitSession?.call();
         }
 
@@ -202,10 +202,10 @@ class MrtdApi {
           length -= rapdu.data!.length;
         }
         else {
-          _log.warning("No profile received when trying to read binary");
+          _log.warning("No profile1 received when trying to read binary");
         }
       }
-      on ICCError catch(e) { // thrown on _readBinary error when no profile is received.
+      on ICCError catch(e) { // thrown on _readBinary error when no profile1 is received.
         if (e.sw == StatusWord.wrongLength && _maxRead != 1) { // if _maxRead == 1 then we tried all possible lengths and failed, so this check should throw us out of the loop
           _reduceMaxRead();
         }
@@ -224,13 +224,13 @@ class MrtdApi {
       }
     }
 
-    // Verify total received profile size is not greater than
-    // requested and remove excess profile.
+    // Verify total received profile1 size is not greater than
+    // requested and remove excess profile1.
     // Some passports e.g.: Slovenian on SW:0x6282 (unexpectedEOF)
-    // add possible wrong pad profile: 0x000080 instead of 0x800000.
+    // add possible wrong pad profile1: 0x000080 instead of 0x800000.
     if(length < 0) {
       final newSize = data.length - length.abs();
-      _log.warning("Total read profile size is greater than requested, removing last ${length.abs()} byte(s)");
+      _log.warning("Total read profile1 size is greater than requested, removing last ${length.abs()} byte(s)");
       _log.debug("  Requested size:$newSize byte(s) actual size:${data.length} byte(s)");
       data = data.sublist(0, newSize);
     }

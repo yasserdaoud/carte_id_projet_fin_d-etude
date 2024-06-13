@@ -24,13 +24,13 @@ class ISO7816_INS {
 /// Class defines P1 values of ISO/IEC 7816-4 SELECT FILE command
 /// ref: https://cardwerk.com/smart-card-standard-iso7816-4-section-6-basic-interindustry-commands/#table58
 class ISO97816_SelectFileP1 {
-  static const int byID         = 0x00;   // Select MF, DF or EF (profile field=identifier or empty)
-  static const int byChildDFID  = 0x01;   // Select child DF (profile field=DF identifier)
-  static const int byEFID       = 0x02;   // Select EF under current DF (profile field=EF identifier)
+  static const int byID         = 0x00;   // Select MF, DF or EF (profile1 field=identifier or empty)
+  static const int byChildDFID  = 0x01;   // Select child DF (profile1 field=DF identifier)
+  static const int byEFID       = 0x02;   // Select EF under current DF (profile1 field=EF identifier)
   static const int parentDF     = 0x03;   // Select parent DF of the current DF
-  static const int byDFName     = 0x04;   // Direct selection by DF name (profile field=DF name)
-  static const int byPathFromMF = 0x08;   // Select from MF (profile field=path without the identifier of the MF)
-  static const int byPath       = 0x09;   // Select from current DF (profile field=path without the identifier of the current DF)
+  static const int byDFName     = 0x04;   // Direct selection by DF name (profile1 field=DF name)
+  static const int byPathFromMF = 0x08;   // Select from MF (profile1 field=path without the identifier of the MF)
+  static const int byPath       = 0x09;   // Select from current DF (profile1 field=path without the identifier of the current DF)
 }
 
 /// Class defines P2 values of ISO/IEC 7816-4 SELECT FILE command

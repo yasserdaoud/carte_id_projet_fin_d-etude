@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../main.dart';
 import '../../nfc/format/mrtd_data.dart';

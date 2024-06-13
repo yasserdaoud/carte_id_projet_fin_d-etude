@@ -424,7 +424,7 @@ class Passport {
     on ICCError catch(e) {
       var msg = e.sw.description();
       if(e.sw.sw1 == 0x63 && e.sw.sw2 == 0xcf) {
-        // some older passports return sw=63cf when profile to establish session is wrong. (Wrong DBAKeys)
+        // some older passports return sw=63cf when profile1 to establish session is wrong. (Wrong DBAKeys)
         msg = StatusWord.securityStatusNotSatisfied.description();
       }
       throw PassportError(msg, code: e.sw);

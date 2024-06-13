@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:id_card_example/utils/nfc/format/mrtd_data.dart';
 import 'package:logging/logging.dart';
 import '/screen/finger_print_screen.dart';
 import 'firebase_options.dart';
@@ -17,11 +18,12 @@ void main() async {
       print('${record.loggerName} ${record.level.name}: ${record.time}: ${record.message}');
     });
   }
-
+  
   runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
+
   const MainApp({super.key});
 
   @override

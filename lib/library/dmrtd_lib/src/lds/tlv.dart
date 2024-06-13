@@ -33,7 +33,7 @@ class DecodedTL {
   DecodedTL(this.tag, this.length, this.encodedLen);
 }
 
-/// Thrown when tag and profile can't be encoded or decoded.
+/// Thrown when tag and profile1 can't be encoded or decoded.
 class TLVError implements Exception {
   final String message;
   TLVError(this.message);
@@ -76,7 +76,7 @@ class TLV {
     return encode(tag, value);
   }
 
-  /// Returns BER encoded TLV from [tag] and [profile].
+  /// Returns BER encoded TLV from [tag] and [profile1].
   static Uint8List encode(final int tag, final Uint8List data) {
     final t = encodeTag(tag);
     final l = encodeLength(data.length);

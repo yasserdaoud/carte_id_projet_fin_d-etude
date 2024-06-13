@@ -21,7 +21,7 @@ class ICCError implements Exception {
 }
 
 
-/// Defines ISO/IEC-7816 ICC API interface to send commands and receive profile.
+/// Defines ISO/IEC-7816 ICC API interface to send commands and receive profile1.
 class ICC {
   final ComProvider _com;
   final _log = Logger("icc");
@@ -44,7 +44,7 @@ class ICC {
   }
 
   /// Sends EXTERNAL AUTHENTICATE command to ICC.
-  /// ICC should return it's computed authentication profile.
+  /// ICC should return it's computed authentication profile1.
   /// Can throw [ICCError] or [ComProviderError].
   Future<Uint8List> externalAuthenticate({ required Uint8List data, required int ne, int cla = ISO7816_CLA.NO_SM }) async {
     final rapdu = await _transceive(
@@ -57,7 +57,7 @@ class ICC {
   }
 
   /// Sends INTERNAL AUTHENTICATE command to ICC.
-  /// ICC should return it's computed authentication profile.
+  /// ICC should return it's computed authentication profile1.
   /// Can throw [ICCError] or [ComProviderError].
   Future<Uint8List> internalAuthenticate({ required Uint8List data, int p1 = 0x00, int p2 = 0x00, required int ne, int cla = ISO7816_CLA.NO_SM }) async {
     final rapdu = await _transceive(
@@ -83,11 +83,11 @@ class ICC {
   }
 
   /// Sends READ BINARY command to ICC.
-  /// It returns [ne] long chunk of profile at [offset].
+  /// It returns [ne] long chunk of profile1 at [offset].
   /// Max [offset] can be 32 766. [ne] must not overlap offset 32 767.
-  /// Can throw [ICCError] if R-APDU returns no profile and error status or [ComProviderError].
+  /// Can throw [ICCError] if R-APDU returns no profile1 and error status or [ComProviderError].
   ///
-  /// Note: Use [readBinaryExt] to read profile chunks at offsets greater than 32 767.
+  /// Note: Use [readBinaryExt] to read profile1 chunks at offsets greater than 32 767.
   Future<ResponseAPDU> readBinary({ required int offset, required int ne, int cla = ISO7816_CLA.NO_SM }) async {
     if(offset > 32766) {
       throw ArgumentError.value(offset, null, "Max read binary offset can be 32 767 bytes");
@@ -103,10 +103,10 @@ class ICC {
   }
 
   /// Sends READ BINARY command to ICC.
-  /// It returns file's [ne] long chunk of profile at [offset].
+  /// It returns file's [ne] long chunk of profile1 at [offset].
   /// File is identified by [sfi].
   /// Max [offset] can be 255.
-  /// Can throw [ICCError] if R-APDU returns no profile and error status or [ComProviderError].
+  /// Can throw [ICCError] if R-APDU returns no profile1 and error status or [ComProviderError].
   Future<ResponseAPDU> readBinaryBySFI({ required int sfi, required int offset, required int ne, int cla = ISO7816_CLA.NO_SM }) async {
     if(offset >  255) {
       throw ArgumentError.value(offset, null, "readBinaryBySFI: Max offset can be 256 bytes");
@@ -121,12 +121,12 @@ class ICC {
   }
 
   /// Sends Extended READ BINARY (odd ins 'B1') command to ICC.
-  /// It returns [ne] long chunk of profile at [offset].
+  /// It returns [ne] long chunk of profile1 at [offset].
   /// [offset] can be greater than 32 767.
-  /// Can throw [ICCError] if R-APDU returns no profile and error status or [ComProviderError].
+  /// Can throw [ICCError] if R-APDU returns no profile1 and error status or [ComProviderError].
   Future<ResponseAPDU> readBinaryExt({ required int offset, required int ne, int cla = ISO7816_CLA.NO_SM }) async {
-    // Returned profile will be encoded in BER-TLV with tag 0x53.
-    // We add additional bytes to ne for this extra profile.
+    // Returned profile1 will be encoded in BER-TLV with tag 0x53.
+    // We add additional bytes to ne for this extra profile1.
     final enNeLen  = TLV.encodeLength(ne).length;
     final addBytes =  1 /*byte = tag*/ + enNeLen;
 		ne = ne <= 256 ? min(256, ne + addBytes) : ne + addBytes;
@@ -139,7 +139,7 @@ class ICC {
     final rtlv = TLV.fromBytes(rapdu.data!);
     if(rtlv.tag != 0x53) {
       throw ICCError(
-        "readBinaryExt failed. Received invalid BER-TLV encoded profile with tag=0x${rtlv.tag.hex()}, expected tag=0x53",
+        "readBinaryExt failed. Received invalid BER-TLV encoded profile1 with tag=0x${rtlv.tag.hex()}, expected tag=0x53",
         rapdu.status,
         rapdu.data
       );
@@ -200,7 +200,7 @@ class ICC {
   }
 
 
-  /// Can throw [ICCError] if no profile is received SW is error
+  /// Can throw [ICCError] if no profile1 is received SW is error
   Future<ResponseAPDU> _readBinary(final CommandAPDU cmd) async {
     assert(cmd.ins == ISO7816_INS.READ_BINARY_EXT ||
            cmd.ins == ISO7816_INS.READ_BINARY);
@@ -217,14 +217,14 @@ class ICC {
     _log.debug("Transceiving to ICC: $cmd");
     final rawCmd = _wrap(cmd).toBytes();
 
-    _log.debug("Sending ${rawCmd.length} byte(s) to ICC: profile='${rawCmd.hex()}'");
+    _log.debug("Sending ${rawCmd.length} byte(s) to ICC: profile1='${rawCmd.hex()}'");
     Uint8List rawResp = await _com.transceive(rawCmd);
     _log.debug("Received ${rawResp.length} byte(s) from ICC");
-    _log.sdDebug(" profile='${rawResp.hex()}'");
+    _log.sdDebug(" profile1='${rawResp.hex()}'");
 
     final rapdu = _unwrap(ResponseAPDU.fromBytes(rawResp));
     _log.debug("Received response from ICC: ${rapdu.status} data_len=${rapdu.data?.length ?? 0}");
-    _log.sdDebug(" profile=${rapdu.data?.hex()}");
+    _log.sdDebug(" profile1=${rapdu.data?.hex()}");
     return rapdu;
   }
 

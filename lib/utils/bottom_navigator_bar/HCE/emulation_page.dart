@@ -20,17 +20,17 @@ class _EmulationPageState extends State<EmulationPage> {
       if (isServiceRunning) {
         await _hceChannel.invokeMethod('stopHceService');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('HCE Service Stopped')),
+          SnackBar(content: Text('HCE1 Service Stopped')),
         );
       } else {
         final bool isServiceStarted = await _hceChannel.invokeMethod('startHceService');
         if (isServiceStarted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('HCE Service Started')),
+            SnackBar(content: Text('HCE1 Service Started')),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to start HCE Service')),
+            SnackBar(content: Text('Failed to start HCE1 Service')),
           );
         }
       }
@@ -39,7 +39,7 @@ class _EmulationPageState extends State<EmulationPage> {
       });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to ${isServiceRunning ? 'stop' : 'start'} HCE Service: ${e.toString()}')),
+        SnackBar(content: Text('Failed to ${isServiceRunning ? 'stop' : 'start'} HCE1 Service: ${e.toString()}')),
       );
     }
   }

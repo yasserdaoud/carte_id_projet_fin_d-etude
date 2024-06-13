@@ -36,17 +36,17 @@ class MrtdSM extends SecureMessaging {
   CommandAPDU protect(final CommandAPDU cmd) {
     _log.debug("Protecting APDU");
     _log.verbose("  header=${cmd.rawHeader().hex()}");
-    _log.sdVerbose("  profile=${cmd.data?.hex()}");
+    _log.sdVerbose("  profile1=${cmd.data?.hex()}");
     _log.verbose("  Le=${cmd.ne}");
 
     final pcmd   = maskCmd(cmd);
     _log.verbose("masked APDU header=${pcmd.rawHeader().hex()}");
 
     final dataDO = generateDataDO(pcmd);
-    _log.verbose("Generated profile DO=${dataDO.hex()}");
+    _log.verbose("Generated profile1 DO=${dataDO.hex()}");
 
     final do97   = SecureMessaging.do97(pcmd.ne);
-    _log.verbose("Generated profile DO97=${do97.hex()}");
+    _log.verbose("Generated profile1 DO97=${do97.hex()}");
 
     final M  = generateM(cmd: pcmd, dataDO: dataDO, do97: do97);
     _log.verbose("Generated M=${M.hex()}");
@@ -58,7 +58,7 @@ class MrtdSM extends SecureMessaging {
     final CC   = cipher.mac(N);
     final do8E = SecureMessaging.do8E(CC);
     _log.verbose("Calculated CC=${CC.hex()}");
-    _log.verbose("Generated profile DO8E=${do8E.hex()}");
+    _log.verbose("Generated profile1 DO8E=${do8E.hex()}");
 
     pcmd.data = Uint8List.fromList(dataDO + do97 + do8E);
     pcmd.ne   = 256; // serialized as 0x00
@@ -69,7 +69,7 @@ class MrtdSM extends SecureMessaging {
   ResponseAPDU unprotect(ResponseAPDU rapdu) {
     if(rapdu.status == StatusWord.smDataMissing ||
        rapdu.status == StatusWord.smDataInvalid ||
-      (rapdu.data?.isEmpty ?? true )) { //RAPDU should have profile
+      (rapdu.data?.isEmpty ?? true )) { //RAPDU should have profile1
       return rapdu;
     }
 
@@ -95,7 +95,7 @@ class MrtdSM extends SecureMessaging {
 
   @visibleForTesting
   Uint8List? decryptDataDO(final DecodedTV? dtv) {
-    _log.verbose("Decrypting profile=${dtv?.value.hex()}");
+    _log.verbose("Decrypting profile1=${dtv?.value.hex()}");
     if(dtv == null || dtv.value.isEmpty) {
       return null;
     }
@@ -103,17 +103,17 @@ class MrtdSM extends SecureMessaging {
     final tag = dtv.tag.value;
     if(tag != SecureMessaging.tagDO85 &&
        tag != SecureMessaging.tagDO87) {
-      throw SMError("Can't decrypt invalid profile DO with tag=$tag value=${dtv.value.hex()}");
+      throw SMError("Can't decrypt invalid profile1 DO with tag=$tag value=${dtv.value.hex()}");
     }
 
     final bool isDO87 = tag == SecureMessaging.tagDO87;
     final bool padded = !isDO87 || dtv.value[0] == 0x01; // Defined in ISO/IEC 7816-4 part 5
     var data = cipher.decrypt(dtv.value.sublist(isDO87 ? 1 : 0));
-    _log.sdVerbose("Decrypted profile=${data.hex()}");
-    _log.sdVerbose("Decrypted profile is padded: $padded");
+    _log.sdVerbose("Decrypted profile1=${data.hex()}");
+    _log.sdVerbose("Decrypted profile1 is padded: $padded");
     if(padded) {
       data = ISO9797.unpad(data);
-      _log.sdVerbose("Unpadded profile=${data.hex()}");
+      _log.sdVerbose("Unpadded profile1=${data.hex()}");
     }
     return data;
   }
@@ -160,7 +160,7 @@ class MrtdSM extends SecureMessaging {
     return mcmd;
   }
 
-  /// Returns decoded profile from DO85 or DO87 if they are present in [rapdu].
+  /// Returns decoded profile1 from DO85 or DO87 if they are present in [rapdu].
   @visibleForTesting
   DecodedTV? parseDataDOFromRAPDU(final ResponseAPDU rapdu) {
     if(rapdu.data == null || rapdu.data!.isEmpty ||

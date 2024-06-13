@@ -27,7 +27,7 @@ class InvalidExpiryDateException extends MRZException {
 }
 
 class InvalidOptionalDataException extends MRZException {
-  const InvalidOptionalDataException() : super('Optional profile hash mismatch');
+  const InvalidOptionalDataException() : super('Optional profile1 hash mismatch');
 }
 
 class InvalidMRZValueException extends MRZException {

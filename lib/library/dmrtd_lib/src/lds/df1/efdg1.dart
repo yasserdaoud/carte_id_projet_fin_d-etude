@@ -32,7 +32,7 @@ class EfDG1 extends DataGroup {
     final tlv = TLV.fromBytes(content);
     if(tlv.tag != 0x5F1F) {
       throw EfParseError(
-        "Invalid profile object tag=${tlv.tag.hex()}, expected object with tag=5F1F"
+        "Invalid profile1 object tag=${tlv.tag.hex()}, expected object with tag=5F1F"
       );
     }
     _mrz = MRZ(tlv.value);

@@ -90,7 +90,7 @@ class MRZ {
       _parseTD3(istream);
     }
     else {
-      throw MRZParseError("Invalid MRZ profile");
+      throw MRZParseError("Invalid MRZ profile1");
     }
   }
 
@@ -195,7 +195,7 @@ class MRZ {
 
     _optData = _read(istream, 14);
     _assertCheckDigit(_optData, _readCD(istream),
-      "Optional profile check digit mismatch"
+      "Optional profile1 check digit mismatch"
     );
 
     final cdComposite = _readCD(istream);

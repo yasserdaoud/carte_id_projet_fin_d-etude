@@ -296,7 +296,7 @@ class EfDG2 extends DataGroup {
 
         data[3] != 0x00) {
 
-      throw EfParseError("Biometric profile block is invalid");
+      throw EfParseError("Biometric profile1 block is invalid");
 
     }
 
@@ -309,7 +309,7 @@ class EfDG2 extends DataGroup {
 
     if (versionNumber != VERSION_NUMBER) {
 
-      throw EfParseError("Version of Biometric profile is not valid");
+      throw EfParseError("Version of Biometric profile1 is not valid");
 
     }
 

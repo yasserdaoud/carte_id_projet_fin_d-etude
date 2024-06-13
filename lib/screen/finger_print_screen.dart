@@ -77,21 +77,16 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Login",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "Mulish",
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  fontSize: 32,
-                ),
+
+              Image.asset(
+                'assets/fingerprint.png', // Ensure you have this image in your assets folder
+                height: 110,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Text(
-                  "Authenticate using your fingerprint instead of your password",
+                  "Authenticate using your fingerprint instead of your password.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Mulish",

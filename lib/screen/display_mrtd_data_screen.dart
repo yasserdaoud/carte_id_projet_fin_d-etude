@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../firebase/authenticate_user/aa.dart';
 import '../firebase/authenticate_user/authenticate_user_page.dart';
 import '../utils/nfc/format/format_dg11.dart';
 import '../utils/nfc/format/format_dg12.dart';
@@ -105,17 +106,15 @@ class ResultPage extends StatelessWidget {
                 onPressed: () async {
                   await _saveProfile(context);
 
-
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          AuthenticateUserPage( mrtdData: _mrtdData,
+                          MainPage( mrtdData: _mrtdData,
                             rawHandSignatureData: rawHandSignatureData,),
-                       //MainPage(
-                       // mrtdData: _mrtdData,
-                        //rawHandSignatureData: rawHandSignatureData,
+                      //MainPage(
+                      // mrtdData: _mrtdData,
+                      //rawHandSignatureData: rawHandSignatureData,
                       // )
                     ),
                   );
@@ -140,7 +139,7 @@ class ResultPage extends StatelessWidget {
                     Text(
                       'Confirm',
                       style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
+                    ),
                   ],
                 ),
               ),
@@ -152,20 +151,25 @@ class ResultPage extends StatelessWidget {
     );
   }
 
+  Future<void> _saveProfile(BuildContext context) async {
+    // Convert the raw signature data to a base64 string
+    String? signatureBase64;
+    if (rawHandSignatureData != null) {
+      signatureBase64 = base64Encode(rawHandSignatureData!);
+    }
 
-
-    Future<void> _saveProfile(BuildContext context) async {
-      var profileData = {
-        'documentNumber': _mrtdData.dg1!.mrz.documentNumber,
-        'firstName': _mrtdData.dg1!.mrz.firstName,
-        'lastName': _mrtdData.dg1!.mrz.lastName,
-        'dateOfBirth': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfBirth),
-        'nationality': _mrtdData.dg1!.mrz.nationality,
-        'dateOfExpiry': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfExpiry),
-        'imageData': _mrtdData.dg2!.imageData,
-        'nationalIdentificationNumber': _mrtdData.dg11!.personalNumber,
-      };
-
+    var profileData = {
+      'documentNumber': _mrtdData.dg1!.mrz.documentNumber,
+      'gender': _mrtdData.dg1!.mrz.gender,
+      'firstName': _mrtdData.dg1!.mrz.firstName,
+      'lastName': _mrtdData.dg1!.mrz.lastName,
+      'dateOfBirth': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfBirth),
+      'nationality': _mrtdData.dg1!.mrz.nationality,
+      'dateOfExpiry': DateFormat.yMd().format(_mrtdData.dg1!.mrz.dateOfExpiry),
+      'imageData': _mrtdData.dg2!.imageData,
+      'nationalIdentificationNumber': _mrtdData.dg11!.personalNumber,
+      'signatureData': signatureBase64,  // Add the signature data here
+    };
 
     // Save to Firestore
     FirebaseFirestore.instance.collection('users').add(profileData).then((docRef) {
@@ -173,8 +177,7 @@ class ResultPage extends StatelessWidget {
       print("National identification number: ${_mrtdData.dg11!.personalNumber}");
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AuthenticateUserPage( mrtdData: _mrtdData,
-            rawHandSignatureData: rawHandSignatureData,),
+          builder: (context) => MainPage(mrtdData: _mrtdData, rawHandSignatureData: rawHandSignatureData),
         ),
       );
     }).catchError((error) {

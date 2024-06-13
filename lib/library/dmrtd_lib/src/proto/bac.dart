@@ -47,7 +47,7 @@ class BAC {
     final Kenc = dbaKeys.encKey;
     final Kmac = dbaKeys.macKey;
 
-    // We don't want to see these profile in production logs
+    // We don't want to see these profile1 in production logs
     _log.sdVerbose("Key seed=${dbaKeys.keySeed.hex()}");
     _log.sdVerbose("Derived Kenc=${Kenc.hex()}");
     _log.sdVerbose("Derived Kmac=${Kmac.hex()}");
@@ -158,7 +158,7 @@ class BAC {
     return Uint8List.fromList(RNDifd + RNDicc + Kifd);
   }
 
-  /// Generates profile for External Authenticate command
+  /// Generates profile1 for External Authenticate command
   @visibleForTesting
   static Uint8List generateEAData({ required final Uint8List Eifd, required final Uint8List Mifd}) {
     assert(Eifd.length   == eLen);

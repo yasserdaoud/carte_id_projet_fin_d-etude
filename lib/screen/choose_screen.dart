@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:id_card_example/screen/home_screen.dart';
 import 'package:intl/intl.dart';
 import '../library/MRZ/mrz_parser/src/mrz_result.dart';
+import 'login_screen.dart';
 import 'reader_screen.dart';
 import 'mrtd_form_screen.dart';
 import 'mrz_screen.dart';
@@ -75,6 +76,20 @@ class _ScanManualState extends State<ScanManual> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.login, color: Colors.white),
+            onPressed: () {
+              // Navigate to login screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -85,15 +100,21 @@ class _ScanManualState extends State<ScanManual> {
               const SizedBox(height: 20),
               Image.asset(
                 'assets/carte_ID_logo.png', // Assurez-vous d'avoir une image à cet emplacement
-                height: 130,
+                height: 100,
               ),
               const SizedBox(height: 40),
               const Text(
-                'Please choose an option to proceed',
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                'Please choose an option to proceed.',
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Mulish",
+                  height: 1.5,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
@@ -172,6 +193,18 @@ class _ScanManualState extends State<ScanManual> {
                   ],
                 ),
               ),
+              const SizedBox(height: 40),
+              const Text(
+                'If you have already read your Identity Card, please click the button at the top.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Mulish",
+                  height: 1.5,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
             ],
           ),
         ),
@@ -179,3 +212,4 @@ class _ScanManualState extends State<ScanManual> {
     );
   }
 }
+
