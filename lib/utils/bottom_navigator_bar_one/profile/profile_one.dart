@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../main.dart';
-
-
 
 class ProfilePageOne extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -35,7 +33,64 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
     } catch (e) {
       errorMessage = "Failed to load image data: $e";
     }
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  // Encode user data as JSON string
+  String encodeUserData(Map<String, dynamic> userData) {
+    return jsonEncode(userData);
+  }
+
+  // Convert string to hex representation
+  String toHex(String input) {
+    List<int> bytes = utf8.encode(input);
+    return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
+  }
+
+  // Start NFC data transfer
+  Future<void> _startNFCTransfer() async {
+    try {
+      var availability = await FlutterNfcKit.nfcAvailability;
+      if (availability != NFCAvailability.available) {
+        if (mounted) {
+          setState(() {
+            errorMessage = 'NFC is not available on this device';
+          });
+        }
+        return;
+      }
+
+      await FlutterNfcKit.poll();
+      var userDataString = encodeUserData(widget.userData);
+      var userDataHex = toHex(userDataString);  // Convert data to hex string
+
+      // Start NFC transmission in chunks to handle large data
+      for (int i = 0; i < userDataHex.length; i += 256) {
+        var chunk = userDataHex.substring(i, i + 256 > userDataHex.length ? userDataHex.length : i + 256);
+        await FlutterNfcKit.transceive(chunk);
+      }
+
+      await FlutterNfcKit.finish();
+      if (mounted) {
+        setState(() {
+          errorMessage = 'Data transferred successfully';
+        });
+      }
+    } catch (e) {
+      print("NFC Transfer Error: $e");
+      if (mounted) {
+        setState(() {
+          errorMessage = 'Failed to transfer data: $e';
+        });
+      }
+    }
   }
 
   @override
@@ -45,7 +100,7 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          '${widget.userData['lastName']} ${widget.userData['firstName']} ',
+          '${widget.userData['lastName']} ${widget.userData['firstName']}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 21,
@@ -76,14 +131,20 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
           IconButton(
             icon: Icon(_isVisible ? Icons.visibility : Icons.visibility_off, color: Colors.white),
             onPressed: () {
-              setState(() {
-                _isVisible = !_isVisible;
-              });
+              if (mounted) {
+                setState(() {
+                  _isVisible = !_isVisible;
+                });
+              }
             },
           ),
           IconButton(
             icon: Icon(Icons.logout, color: Colors.white),
             onPressed: _logout,
+          ),
+          IconButton(
+            icon: Icon(Icons.nfc, color: Colors.white),
+            onPressed: _startNFCTransfer,
           ),
         ],
       ),
@@ -94,6 +155,14 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
             _isVisible ? _profileDetails() : Container(),
             _isVisible ? _signatureSection() : Container(),
             SizedBox(height: 40),
+            if (errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  errorMessage!,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
           ],
         ),
       ),
@@ -302,9 +371,11 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => MainApp()),
-    );
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainApp()),
+      );
+    }
   }
 }

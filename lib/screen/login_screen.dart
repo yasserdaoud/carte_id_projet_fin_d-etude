@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-
 import '../utils/bottom_navigator_bar_one/main_page_one.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,23 +9,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _personalNumberController = TextEditingController();
+  final TextEditingController _documentNumberController = TextEditingController();
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
   void _login(BuildContext context) async {
-    final personalNumber = _personalNumberController.text.trim();
+    final documentNumber = _documentNumberController.text.trim();
 
-    if (personalNumber.isEmpty) {
+    if (documentNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter your personal number.')),
+        SnackBar(content: Text('Please enter your document number.')),
       );
       return;
     }
 
-    if (personalNumber.length < 18) {
+    if (documentNumber.length < 9) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Your national identification number is incorrect, try again.')),
+        SnackBar(content: Text('Your document number is incorrect, try again.')),
       );
       return;
     }
@@ -41,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Fetch user data from Firestore based on the personal number
       var userQuery = await FirebaseFirestore.instance
           .collection('users')
-          .where('nationalIdentificationNumber', isEqualTo: personalNumber)
+          .where('documentNumber', isEqualTo: documentNumber)
           .get();
 
       if (userQuery.docs.isNotEmpty) {
@@ -55,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User not found. Please check your personal number.')),
+          SnackBar(content: Text('User not found. Please check your document number.')),
         );
       }
     } catch (error) {
@@ -72,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _personalNumberController.dispose();
+    _documentNumberController.dispose();
     super.dispose();
   }
 
@@ -100,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Please enter your National Identification Number to login',
+                  'Please enter your document Number to login',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Mulish",
@@ -112,15 +109,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 _buildPasswordField(
-                  controller: _personalNumberController,
-                  labelText: 'NIN',
+                  controller: _documentNumberController,
+                  labelText: 'Document Number',
                   icon: Icons.person,
                   validator: (value) {
                     if (value?.isEmpty ?? false) {
-                      return 'Please enter your personal number';
+                      return 'Please enter your document number';
                     }
-                    if (value!.length < 18) {
-                      return 'Your national identification number is incorrect, try again.';
+                    if (value!.length < 9) {
+                      return 'Your document number is incorrect, try again.';
                     }
                     return null;
                   },
@@ -203,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: validator,
       enabled: isEnabled,
       inputFormatters: [
-        LengthLimitingTextInputFormatter(18),
+        LengthLimitingTextInputFormatter(9),
         FilteringTextInputFormatter.digitsOnly,
       ],
     );

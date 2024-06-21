@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:id_card_example/firebase/authenticate_user/authenticate_user_page.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../firebase/authenticate_user/aa.dart';
-import '../firebase/authenticate_user/authenticate_user_page.dart';
 import '../utils/nfc/format/format_dg11.dart';
 import '../utils/nfc/format/format_dg12.dart';
 import '../utils/nfc/format/format_mrz.dart';
