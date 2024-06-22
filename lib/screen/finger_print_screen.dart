@@ -56,7 +56,7 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: const Text(
-            "Bitaka ID",
+            "MyID",
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -101,11 +101,11 @@ class _FingerPrintPageState extends State<FingerPrintPage> {
               AnimatedSwitcher(
                 duration: Duration(milliseconds: 1000),
                 child: _isAuthenticating
-                    ? Lottie.asset(
-                  'assets/animation/Animation.json',
+                    ? Image.asset(
+                  'assets/fingerprint_logo.png',
                   width: 100,
                   height: 100,
-                  key: ValueKey('loading'),
+                  //key: ValueKey('loading'),
                 )
                     : ElevatedButton(
                   style: ElevatedButton.styleFrom(

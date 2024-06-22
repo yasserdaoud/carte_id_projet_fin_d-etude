@@ -3,12 +3,12 @@ part of mrz_parser;
 class _TD1MRZFormatParser {
   _TD1MRZFormatParser._();
 
-  static const _linesLength = 30;
-  static const _linesCount = 3;
+  static const int _linesLength = 30;
+  static const int _linesCount = 3;
 
   static bool isValidInput(List<String> input) =>
       input.length == _linesCount &&
-      input.every((s) => s.length == _linesLength);
+          input.every((s) => s.length == _linesLength);
 
   static MRZResult parse(List<String> input) {
     if (!isValidInput(input)) {
@@ -34,54 +34,28 @@ class _TD1MRZFormatParser {
     final finalCheckDigitRaw = secondLine[29];
     final namesRaw = thirdLine.substring(0, 30);
 
-    final documentTypeFixed =
-        MRZFieldRecognitionDefectsFixer.fixDocumentType(documentTypeRaw);
-    final countryCodeFixed =
-        MRZFieldRecognitionDefectsFixer.fixCountryCode(countryCodeRaw);
+    // Fix fields
+    final documentTypeFixed = MRZFieldRecognitionDefectsFixer.fixDocumentType(documentTypeRaw);
+    final countryCodeFixed = MRZFieldRecognitionDefectsFixer.fixCountryCode(countryCodeRaw);
     final documentNumberFixed = documentNumberRaw;
-    final documentNumberCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+    final documentNumberCheckDigitFixed = MRZFieldRecognitionDefectsFixer.fixCheckDigit(documentNumberCheckDigitRaw);
     final optionalDataFixed = optionalDataRaw;
-    final birthDateFixed =
-        MRZFieldRecognitionDefectsFixer.fixDate(birthDateRaw);
-    final birthDateCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(birthDateCheckDigitRaw);
+    final birthDateFixed = MRZFieldRecognitionDefectsFixer.fixDate(birthDateRaw);
+    final birthDateCheckDigitFixed = MRZFieldRecognitionDefectsFixer.fixCheckDigit(birthDateCheckDigitRaw);
     final sexFixed = MRZFieldRecognitionDefectsFixer.fixSex(sexRaw);
-    final expiryDateFixed =
-        MRZFieldRecognitionDefectsFixer.fixDate(expiryDateRaw);
-    final expiryDateCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(expiryDateCheckDigitRaw);
-    final nationalityFixed =
-        MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
+    final expiryDateFixed = MRZFieldRecognitionDefectsFixer.fixDate(expiryDateRaw);
+    final expiryDateCheckDigitFixed = MRZFieldRecognitionDefectsFixer.fixCheckDigit(expiryDateCheckDigitRaw);
+    final nationalityFixed = MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
     final optionalData2Fixed = optionalData2Raw;
-    final finalCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw);
+    final finalCheckDigitFixed = MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw);
     final namesFixed = MRZFieldRecognitionDefectsFixer.fixNames(namesRaw);
 
-    final documentNumberIsValid = int.tryParse(documentNumberCheckDigitFixed) ==
-        MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);
+    // Validate fields
+    _validateField(documentNumberFixed, documentNumberCheckDigitFixed, InvalidDocumentNumberException());
+    _validateField(birthDateFixed, birthDateCheckDigitFixed, InvalidBirthDateException());
+    _validateField(expiryDateFixed, expiryDateCheckDigitFixed, InvalidExpiryDateException());
 
-    if (!documentNumberIsValid) {
-      throw const InvalidDocumentNumberException();
-    }
-
-    final birthDateIsValid = int.tryParse(birthDateCheckDigitFixed) ==
-        MRZCheckDigitCalculator.getCheckDigit(birthDateFixed);
-
-    if (!birthDateIsValid) {
-      throw const InvalidBirthDateException();
-    }
-
-    final expiryDateIsValid = int.tryParse(expiryDateCheckDigitFixed) ==
-        MRZCheckDigitCalculator.getCheckDigit(expiryDateFixed);
-
-    if (!expiryDateIsValid) {
-      throw const InvalidExpiryDateException();
-    }
-
-    final finalCheckStringFixed =
-        '$documentNumberFixed$documentNumberCheckDigitFixed'
+    final finalCheckStringFixed = '$documentNumberFixed$documentNumberCheckDigitFixed'
         '$optionalDataFixed'
         '$birthDateFixed$birthDateCheckDigitFixed'
         '$expiryDateFixed$expiryDateCheckDigitFixed'
@@ -93,10 +67,10 @@ class _TD1MRZFormatParser {
       throw const InvalidMRZValueException();
     }
 
+    // Parse fields
     final documentType = MRZFieldParser.parseDocumentType(documentTypeFixed);
     final countryCode = MRZFieldParser.parseCountryCode(countryCodeFixed);
-    final documentNumber =
-        MRZFieldParser.parseDocumentNumber(documentNumberFixed);
+    final documentNumber = MRZFieldParser.parseDocumentNumber(documentNumberFixed);
     final optionalData = MRZFieldParser.parseOptionalData(optionalDataFixed);
     final birthDate = MRZFieldParser.parseBirthDate(birthDateFixed);
     final sex = MRZFieldParser.parseSex(sexFixed);
@@ -116,7 +90,12 @@ class _TD1MRZFormatParser {
       sex: sex,
       expiryDate: expiryDate,
       personalNumber: optionalData,
-      personalNumber2: optionalData2,
     );
+  }
+
+  static void _validateField(String field, String checkDigit, Exception exception) {
+    if (int.tryParse(checkDigit) != MRZCheckDigitCalculator.getCheckDigit(field)) {
+      throw exception;
+    }
   }
 }

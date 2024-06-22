@@ -6,7 +6,7 @@ class MRZCameraOverlay extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  static const _documentFrameRatio = 1.585; // Passport's size (ISO/IEC 7810 ID-3) is 125mm × 88mm
+  static const _documentFrameRatio = 1.585; // Taille du passeport (ISO/IEC 7810 ID-3) est de 125mm × 88mm
   final Widget child;
 
   @override
@@ -30,9 +30,7 @@ class MRZCameraOverlay extends StatelessWidget {
     return ClipPath(
       clipper: _DocumentClipper(rect: overlayRect),
       child: Container(
-        foregroundDecoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.75),
-        ),
+        color: Colors.black.withOpacity(0.75),
       ),
     );
   }
@@ -42,7 +40,7 @@ class MRZCameraOverlay extends StatelessWidget {
       left: overlayRect.left,
       top: overlayRect.top,
       child: AnimatedContainer(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 500),
         width: overlayRect.width,
         height: overlayRect.height,
         decoration: BoxDecoration(
@@ -56,15 +54,21 @@ class MRZCameraOverlay extends StatelessWidget {
   Widget _buildGuidanceText(RRect overlayRect) {
     return Positioned(
       left: overlayRect.left,
-      top: overlayRect.top - 30,
+      top: overlayRect.top - 40,
       width: overlayRect.width,
-      child: Text(
-        'Align the document within the frame',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.amber,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+      child: Center(
+        child: Container(
+          color: Colors.black.withOpacity(0.5),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+          child: Text(
+            'Align the document within the frame',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.amber,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -73,16 +77,16 @@ class MRZCameraOverlay extends StatelessWidget {
   RRect _calculateOverlaySize(Size size) {
     double width, height;
     if (size.height > size.width) {
-      height = size.width * 0.9; // Inverted height and width calculations
-      width = height / _documentFrameRatio;
+      width = size.width * 0.9;
+      height = width / _documentFrameRatio;
     } else {
-      width = size.height * 0.75; // Inverted width and height calculations
-      height = width * _documentFrameRatio;
+      height = size.height * 0.75;
+      width = height / _documentFrameRatio;
     }
     final topOffset = (size.height - height) / 2;
     final leftOffset = (size.width - width) / 2;
 
-    return RRect.fromLTRBR(leftOffset, topOffset, leftOffset + width, topOffset + height, const Radius.circular(8));
+    return RRect.fromLTRBR(leftOffset, topOffset, leftOffset + width, topOffset + height, const Radius.circular(12));
   }
 }
 

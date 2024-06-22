@@ -3,12 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:id_card_example/firebase/authenticate_user/authenticate_user_page.dart';
+import 'package:id_card_example/screen/login_screen.dart';
 import 'package:intl/intl.dart';
 import '../utils/nfc/format/format_dg11.dart';
 import '../utils/nfc/format/format_dg12.dart';
 import '../utils/nfc/format/format_mrz.dart';
 import '../utils/nfc/format/mrtd_data.dart';
-import '../utils/bottom_navigator_bar/main_page.dart';
+
 
 class ResultPage extends StatelessWidget {
   final String _alertMessage = "";
@@ -107,12 +108,8 @@ class ResultPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          MainPage( mrtdData: _mrtdData,
-                            rawHandSignatureData: rawHandSignatureData,),
-                      //MainPage(
-                      // mrtdData: _mrtdData,
-                      //rawHandSignatureData: rawHandSignatureData,
-                      // )
+                          LoginScreen(
+                            ),
                     ),
                   );
                 },
@@ -174,7 +171,7 @@ class ResultPage extends StatelessWidget {
       print("National identification number: ${_mrtdData.dg11!.personalNumber}");
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => MainPage(mrtdData: _mrtdData, rawHandSignatureData: rawHandSignatureData),
+          builder: (context) =>LoginScreen(),
         ),
       );
     }).catchError((error) {

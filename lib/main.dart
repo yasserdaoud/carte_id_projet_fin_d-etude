@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Bitaka ID",
+      title: "MyID",
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber)),
@@ -48,7 +48,7 @@ class NfcApp extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "Bitaka ID",
+          "MyID",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -83,7 +83,7 @@ class NfcApp extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
-                  "This application allows you to emulate your identity card. Click on the button below to start scanning.",
+                  "This application allows you to Read and Share data of your identity card. Click on the button below to start.",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),

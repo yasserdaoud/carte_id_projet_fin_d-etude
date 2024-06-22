@@ -10,25 +10,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _documentNumberController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
   void _login(BuildContext context) async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     final documentNumber = _documentNumberController.text.trim();
-
-    if (documentNumber.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter your document number.')),
-      );
-      return;
-    }
-
-    if (documentNumber.length < 9) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Your document number is incorrect, try again.')),
-      );
-      return;
-    }
 
     setState(() {
       _isLoading = true;
@@ -51,20 +42,37 @@ class _LoginScreenState extends State<LoginScreen> {
           MaterialPageRoute(builder: (context) => SuccessScreen(userData: userData)),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User not found. Please check your document number.')),
-        );
+        _showErrorDialog(context, 'User not found. Please check your document number.');
       }
     } catch (error) {
       print("Failed to fetch user data: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to login. Please try again later.')),
-      );
+      _showErrorDialog(context, 'Failed to login. Please try again later.');
     } finally {
       setState(() {
         _isLoading = false;
       });
     }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -79,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "Bitaka ID",
+          "MyID",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -88,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30.0),
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -108,12 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildPasswordField(
+                _buildTextFormField(
                   controller: _documentNumberController,
                   labelText: 'Document Number',
                   icon: Icons.person,
                   validator: (value) {
-                    if (value?.isEmpty ?? false) {
+                    if (value?.isEmpty ?? true) {
                       return 'Please enter your document number';
                     }
                     if (value!.length < 9) {
@@ -156,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildPasswordField({
+  Widget _buildTextFormField({
     required TextEditingController controller,
     required String labelText,
     required IconData icon,
@@ -192,10 +201,15 @@ class _LoginScreenState extends State<LoginScreen> {
           borderSide: BorderSide(color: Colors.amber),
           borderRadius: BorderRadius.circular(10),
         ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.amber),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
           borderRadius: BorderRadius.circular(10),
         ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        errorStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
       ),
       validator: validator,
       enabled: isEnabled,
@@ -242,7 +256,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "Bitaka ID",
+          "MyID",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -282,7 +296,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-
             SizedBox(height: 20),
             Text(
               'You have been successfully authenticated!',

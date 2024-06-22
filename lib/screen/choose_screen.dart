@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:id_card_example/screen/home_screen.dart';
 import 'package:intl/intl.dart';
 import '../library/MRZ/mrz_parser/src/mrz_result.dart';
 import 'login_screen.dart';
@@ -72,7 +71,7 @@ class _ScanManualState extends State<ScanManual> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "Bitaka ID",
+          "MyID",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -160,7 +159,7 @@ class _ScanManualState extends State<ScanManual> {
                       builder: (context) => Scaffold(
                         appBar: AppBar(
                           title: const Text(
-                            "Bitaka ID",
+                            "               MyID",
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                           ),

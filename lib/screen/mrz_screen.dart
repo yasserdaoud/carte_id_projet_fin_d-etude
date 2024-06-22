@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:id_card_example/screen/home_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../library/MRZ/mrz_scanner/src/mrz_controller.dart';
 import '../library/MRZ/mrz_scanner/src/mrz_scanner.dart';

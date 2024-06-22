@@ -1,7 +1,7 @@
 part of mrz_parser;
 
 extension _MRZStringExtensions on String {
-  static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
+  static final _validInput = RegExp(r'^[A-Z0-9<]+$');
 
   bool get isValidMRZInput => _validInput.hasMatch(this);
 
@@ -10,28 +10,43 @@ extension _MRZStringExtensions on String {
       return this;
     }
 
-    var start = 0, end = length - 1;
+    int start = 0, end = length - 1;
     while (start < length && this[start] == char) {
       start++;
     }
     while (end >= 0 && this[end] == char) {
       end--;
     }
-    return start < end ? substring(start, end + 1) : '';
+    return start <= end ? substring(start, end + 1) : '';
   }
 
-  String replaceSimilarDigitsWithLetters() => replaceAll('0', 'O')
-      .replaceAll('1', 'I')
-      .replaceAll('2', 'Z')
-      .replaceAll('8', 'B');
+  String replaceSimilarDigitsWithLetters() {
+    final replacements = {
+      '0': 'O',
+      '1': 'I',
+      '2': 'Z',
+      '5': 'S',
+      '8': 'B',
+    };
+    return _replaceCharacters(replacements);
+  }
 
-  String replaceSimilarLettersWithDigits() => replaceAll('O', '0')
-      .replaceAll('Q', '0')
-      .replaceAll('U', '0')
-      .replaceAll('D', '0')
-      .replaceAll('I', '1')
-      .replaceAll('Z', '2')
-      .replaceAll('B', '8');
+  String replaceSimilarLettersWithDigits() {
+    final replacements = {
+      'O': '0',
+      'Q': '0',
+      'U': '0',
+      'D': '0',
+      'I': '1',
+      'Z': '2',
+      'B': '8',
+    };
+    return _replaceCharacters(replacements);
+  }
 
   String replaceAngleBracketsWithSpaces() => replaceAll('<', ' ');
+
+  String _replaceCharacters(Map<String, String> replacements) {
+    return split('').map((char) => replacements[char] ?? char).join();
+  }
 }

@@ -8,8 +8,7 @@ part 'mrz_field_parser.dart';
 part 'mrz_field_recognition_defects_fixer.dart';
 part 'mrz_string_extensions.dart';
 part 'td1_format_mrz_parser.dart';
-part 'td2_format_mrz_parser.dart';
-part 'td3_format_mrz_parser.dart';
+
 
 class MRZParser {
   MRZParser._();
@@ -43,12 +42,7 @@ class MRZParser {
     if (_TD1MRZFormatParser.isValidInput(polishedInput)) {
       return _TD1MRZFormatParser.parse(polishedInput);
     }
-    if (_TD2MRZFormatParser.isValidInput(polishedInput)) {
-      return _TD2MRZFormatParser.parse(polishedInput);
-    }
-    if (_TD3MRZFormatParser.isValidInput(polishedInput)) {
-      return _TD3MRZFormatParser.parse(polishedInput);
-    }
+
 
     throw const InvalidMRZInputException();
   }

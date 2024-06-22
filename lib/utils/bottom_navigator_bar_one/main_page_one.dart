@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:id_card_example/utils/bottom_navigator_bar_one/profile/profile_one.dart';
-import 'HCE/emulation_page_one.dart';
 import 'card/card_page_one.dart';
 
 class MainPageOne extends StatefulWidget {
@@ -26,9 +25,6 @@ class _MainPageOneState extends State<MainPageOne> {
           userData: widget.userData
       ),
 
-      EmulationPageOne(
-          userData: widget.userData
-      ),
       CardPageOne(
           userData: widget.userData
       ),
@@ -52,10 +48,7 @@ class _MainPageOneState extends State<MainPageOne> {
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.nfc),
-            label: 'Emulation',
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card),
             label: 'Card',

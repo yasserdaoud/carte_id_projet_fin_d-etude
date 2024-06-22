@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../main.dart';
 
@@ -142,19 +141,16 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
             icon: Icon(Icons.logout, color: Colors.white),
             onPressed: _logout,
           ),
-          IconButton(
-            icon: Icon(Icons.nfc, color: Colors.white),
-            onPressed: _startNFCTransfer,
-          ),
+
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20),
+           // SizedBox(height: 0),
             _isVisible ? _profileDetails() : Container(),
             _isVisible ? _signatureSection() : Container(),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             if (errorMessage != null)
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -163,7 +159,32 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
                   style: TextStyle(color: Colors.red),
                 ),
               ),
+
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 76.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 5,
+              ),
+              onPressed: _startNFCTransfer,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.nfc_outlined, color: Colors.black),
+                  SizedBox(width: 8),
+                  Text(
+                    'Data transfer',
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+
           ],
+
         ),
       ),
     );

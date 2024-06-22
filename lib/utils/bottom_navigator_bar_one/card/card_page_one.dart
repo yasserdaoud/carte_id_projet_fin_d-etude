@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import '../../../main.dart';
 import '../../nfc/format/mrtd_data.dart';
 import 'back_one.dart';
 import 'front_one.dart';
@@ -22,8 +24,22 @@ class CardPageOne extends StatefulWidget {
 }
 class _CardPageOneState extends State<CardPageOne> {
   final PageController _pageController = PageController();
-  bool _isShown = true; // Add this line
+  bool _isShown = true;
+  String? errorMessage;
+  Uint8List? imageData;
 
+
+  @override
+  void initState() {
+    super.initState();
+    try {
+      imageData = Uint8List.fromList(List<int>.from(widget.userData['imageData']));
+
+    } catch (e) {
+      errorMessage = "Failed to load image data: $e";
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +47,36 @@ class _CardPageOneState extends State<CardPageOne> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "Bitaka ID",
+          "MyID",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        leading: imageData != null
+            ? GestureDetector(
+          child: Padding(
+            padding: EdgeInsets.only(left: 16),
+            child: CircleAvatar(
+              backgroundImage: MemoryImage(imageData!),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.amber,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+            : null,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.white),
+            onPressed: _logout,
+          ),
+        ],
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(0.0),
@@ -56,7 +98,12 @@ class _CardPageOneState extends State<CardPageOne> {
     );
   }
 
-
+  Future<void> _logout() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MainApp()),
+    );
+  }
 }
 
 
@@ -74,6 +121,7 @@ class IDCard extends StatefulWidget {
 class _IDCardState extends State<IDCard> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+
   @override
   void initState() {
     super.initState();
@@ -85,6 +133,8 @@ class _IDCardState extends State<IDCard> with SingleTickerProviderStateMixin {
       setState(() {});
     });
   }
+
+
 
   @override
   void dispose() {

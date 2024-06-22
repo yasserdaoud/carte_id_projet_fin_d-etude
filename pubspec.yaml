@@ -118,6 +118,7 @@ flutter:
     - assets/back_id_card.png
     - assets/login_id.png
     - assets/fingerprint.png
+    - assets/fingerprint_logo.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
