@@ -2,8 +2,13 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:crypto/crypto.dart';
+import 'package:archive/archive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_flutter/qr_flutter.dart';  // Assurez-vous que cette ligne est présente
 import '../../../main.dart';
 
 class ProfilePageOne extends StatefulWidget {
@@ -24,72 +29,24 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
   @override
   void initState() {
     super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() {
     try {
       imageData = Uint8List.fromList(List<int>.from(widget.userData['imageData']));
       if (widget.userData.containsKey('signatureData') && widget.userData['signatureData'] != null) {
         signatureData = base64Decode(widget.userData['signatureData']);
       }
     } catch (e) {
-      errorMessage = "Failed to load image data: $e";
+      setState(() {
+        errorMessage = "Failed to load image data: $e";
+      });
     }
-    if (mounted) {
-      setState(() {});
-    }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  // Encode user data as JSON string
-  String encodeUserData(Map<String, dynamic> userData) {
-    return jsonEncode(userData);
-  }
-
-  // Convert string to hex representation
-  String toHex(String input) {
-    List<int> bytes = utf8.encode(input);
-    return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('');
-  }
-
-  // Start NFC data transfer
-  Future<void> _startNFCTransfer() async {
-    try {
-      var availability = await FlutterNfcKit.nfcAvailability;
-      if (availability != NFCAvailability.available) {
-        if (mounted) {
-          setState(() {
-            errorMessage = 'NFC is not available on this device';
-          });
-        }
-        return;
-      }
-
-      await FlutterNfcKit.poll();
-      var userDataString = encodeUserData(widget.userData);
-      var userDataHex = toHex(userDataString);  // Convert data to hex string
-
-      // Start NFC transmission in chunks to handle large data
-      for (int i = 0; i < userDataHex.length; i += 256) {
-        var chunk = userDataHex.substring(i, i + 256 > userDataHex.length ? userDataHex.length : i + 256);
-        await FlutterNfcKit.transceive(chunk);
-      }
-
-      await FlutterNfcKit.finish();
-      if (mounted) {
-        setState(() {
-          errorMessage = 'Data transferred successfully';
-        });
-      }
-    } catch (e) {
-      print("NFC Transfer Error: $e");
-      if (mounted) {
-        setState(() {
-          errorMessage = 'Failed to transfer data: $e';
-        });
-      }
-    }
+  String _generateQrData() {
+    return widget.userData['documentNumber'];
   }
 
   @override
@@ -130,61 +87,24 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
           IconButton(
             icon: Icon(_isVisible ? Icons.visibility : Icons.visibility_off, color: Colors.white),
             onPressed: () {
-              if (mounted) {
-                setState(() {
-                  _isVisible = !_isVisible;
-                });
-              }
+              setState(() {
+                _isVisible = !_isVisible;
+              });
             },
           ),
           IconButton(
             icon: Icon(Icons.logout, color: Colors.white),
             onPressed: _logout,
           ),
-
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-           // SizedBox(height: 0),
             _isVisible ? _profileDetails() : Container(),
             _isVisible ? _signatureSection() : Container(),
-            SizedBox(height: 30),
-            if (errorMessage != null)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  errorMessage!,
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.amber,
-                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 76.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                elevation: 5,
-              ),
-              onPressed: _startNFCTransfer,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.nfc_outlined, color: Colors.black),
-                  SizedBox(width: 8),
-                  Text(
-                    'Data transfer',
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
-
+            _isVisible ? _qrCodeSection() : Container(),
           ],
-
         ),
       ),
     );
@@ -351,13 +271,45 @@ class _ProfilePageOneState extends State<ProfilePageOne> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.memory(
+                child: signatureData != null
+                    ? Image.memory(
                   signatureData!,
                   fit: BoxFit.contain,
-                ),
+                )
+                    : Container(),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _qrCodeSection() {
+    final String qrData = _generateQrData();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 100),
+      child: Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[850],
+          border: Border.all(color: Colors.amber, width: 2.0),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 4,
+              offset: Offset(2, 2),
+            ),
+          ],
+        ),
+        child: Center(
+          child: QrImageView(
+            data: qrData,
+            version: QrVersions.auto,
+            size: 120.0,
+            foregroundColor: Colors.amber,
+          ),
         ),
       ),
     );

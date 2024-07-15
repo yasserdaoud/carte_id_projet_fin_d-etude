@@ -1,10 +1,6 @@
-import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import '../../../main.dart';
-import '../../nfc/format/mrtd_data.dart';
 import 'back_one.dart';
 import 'front_one.dart';
 import 'dart:typed_data';

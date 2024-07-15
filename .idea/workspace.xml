@@ -6,54 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="d682c2aa-894f-46e6-aac2-7a6a5460e86c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/launcher_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/launcher_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/launcher_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/launcher_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/launcher_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/launcher_icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/yesback.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/yesface.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_checkdigit_calculator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_checkdigit_calculator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_field_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_field_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_field_recognition_defects_fixer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_field_recognition_defects_fixer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_result.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_string_extensions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/mrz_string_extensions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/td1_format_mrz_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/td1_format_mrz_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/td2_format_mrz_parser.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_parser/src/td3_format_mrz_parser.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_overlay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_overlay.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/camera_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/mrz_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/mrz_helper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/mrz_scanner.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/library/MRZ/mrz_scanner/src/mrz_scanner.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/xml/apduservice.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/xml/apduservice.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/animation/Animation.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/animation/Animation1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/animation/IDcard.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/animation/IDcard.lottie" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/choose_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/choose_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/display_mrtd_data_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/home_screen.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/mrtd_form_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screen/mrz_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screen/mrz_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/HCE/emulation_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/back.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/card_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/card/front.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/main_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar/profile/profile.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/HCE/emulation_page_one.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screen/finger_print_screen.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/card/card_page_one.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/card/card_page_one.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/main_page_one.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/main_page_one.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/profile/profile_one.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils/bottom_navigator_bar_one/profile/profile_one.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +89,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "C:/application_memoire/projet_fin_etude_carte_id",
+    "last_opened_file_path": "C:/application_memoire/android-hostcardemulation-sample-master",
     "settings.editor.selected.configurable": "device.mirroring",
     "show.migrate.to.gradle.popup": "false"
   }
